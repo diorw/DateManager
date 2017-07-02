@@ -10,6 +10,11 @@ import android.os.Bundle;
 import com.ashokvarma.bottomnavigation.BadgeItem;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.example.wangchang.testbottomnavigationbar.fragment.BookFragment;
+import com.example.wangchang.testbottomnavigationbar.fragment.GameFragment;
+import com.example.wangchang.testbottomnavigationbar.fragment.HomeFragment;
+import com.example.wangchang.testbottomnavigationbar.fragment.MusicFragment;
+import com.example.wangchang.testbottomnavigationbar.fragment.TvFragment;
 
 import java.util.ArrayList;
 

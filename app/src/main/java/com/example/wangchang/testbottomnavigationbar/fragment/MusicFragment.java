@@ -1,9 +1,11 @@
-package com.example.wangchang.testbottomnavigationbar;
+package com.example.wangchang.testbottomnavigationbar.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.wangchang.testbottomnavigationbar.R;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
@@ -24,15 +27,17 @@ import java.text.SimpleDateFormat;
 public class MusicFragment extends Fragment {
     private static final DateFormat FORMATTER = SimpleDateFormat.getDateInstance();
     private TextView textView;
+    private RecyclerView recyclerView;
     MaterialCalendarView widget;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment, container, false);
-        textView = (TextView)view.findViewById(R.id.tv);
+        View view = inflater.inflate(R.layout.datetasklayout, container, false);
+
+        recyclerView  = (RecyclerView)view.findViewById(R.id.taskrecycleview);
 
         widget = (MaterialCalendarView)view.findViewById(R.id.calendarView);
-        textView.setText(getSelectedDatesString());
+
         return view;
     }
 
@@ -40,13 +45,13 @@ public class MusicFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-      //  textView.setText("music");
 
-        widget.setOnDateChangedListener(new OnDateSelectedListener() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+       widget.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-              //  Toast.makeText(getContext(),"!!!",Toast.LENGTH_LONG).show();
-                textView.setText(getSelectedDatesString());
+                Toast.makeText(getContext(),date.toString(),Toast.LENGTH_LONG).show();
             }
         });
 

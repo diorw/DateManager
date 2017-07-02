@@ -1,4 +1,4 @@
-package com.example.wangchang.testbottomnavigationbar;
+package com.example.wangchang.testbottomnavigationbar.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,12 +6,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
+import com.example.wangchang.testbottomnavigationbar.R;
 
 /**
  * Created by WangChang on 2016/5/15.
  */
-public class GameFragment extends Fragment{
+public class TvFragment extends Fragment{
 
     @Nullable
     @Override
@@ -26,10 +27,10 @@ public class GameFragment extends Fragment{
 
     }
 
-    public static GameFragment newInstance(String content) {
+    public static TvFragment newInstance(String content) {
         Bundle args = new Bundle();
 
-        GameFragment fragment = new GameFragment();
+        TvFragment fragment = new TvFragment();
         fragment.setArguments(args);
         return fragment;
     }

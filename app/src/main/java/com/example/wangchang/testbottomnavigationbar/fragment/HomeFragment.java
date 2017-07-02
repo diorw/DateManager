@@ -1,4 +1,4 @@
-package com.example.wangchang.testbottomnavigationbar;
+package com.example.wangchang.testbottomnavigationbar.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,10 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.wangchang.testbottomnavigationbar.R;
+
 /**
  * Created by WangChang on 2016/5/15.
  */
-public class BookFragment extends Fragment{
+public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -22,14 +24,14 @@ public class BookFragment extends Fragment{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-
+        TextView tv = (TextView) getActivity().findViewById(R.id.tv);
+        tv.setText(getArguments().getString("ARGS"));
     }
 
-    public static BookFragment newInstance(String content) {
+    public static HomeFragment newInstance(String content) {
         Bundle args = new Bundle();
 
-        BookFragment fragment = new BookFragment();
+        HomeFragment fragment = new HomeFragment();
         fragment.setArguments(args);
         return fragment;
     }
