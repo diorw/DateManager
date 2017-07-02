@@ -7,7 +7,11 @@ package com.example.wangchang.testbottomnavigationbar.Been;
 public class SimpleTaskBeen {
     //显示在简略界面的任务
     private String title;
-
+    private boolean isCompleted;
+    public SimpleTaskBeen(String title,boolean isCompleted){
+        this.title=title;
+        this.isCompleted=isCompleted;
+    }
     public String getTitle() {
         return title;
     }
@@ -25,6 +29,6 @@ public class SimpleTaskBeen {
         isCompleted = completed;
     }
 
-    private boolean isCompleted;
+
 
 }
