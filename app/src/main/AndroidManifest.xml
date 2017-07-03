@@ -18,6 +18,7 @@
         <activity android:name=".TaskSettingactivity">
 
         </activity>
+
     </application>
 
 </manifest>
