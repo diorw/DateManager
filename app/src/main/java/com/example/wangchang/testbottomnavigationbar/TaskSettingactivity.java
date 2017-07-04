@@ -60,7 +60,7 @@ public class TaskSettingactivity extends AppCompatActivity {
         remind_time = (EditText)findViewById(R.id.remind_time);
 
         fre = (EditText)findViewById(R.id.frequence);
-        mListPop = new ListPopupWindow(this);
+     /*   mListPop = new ListPopupWindow(this);
         mListPop.setAdapter(new ArrayAdapter<String>(this,R.layout.frequenceitemlayout,lists));
         mListPop.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
         mListPop.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -77,7 +77,7 @@ public class TaskSettingactivity extends AppCompatActivity {
             public void onClick(View view) {
                 mListPop.show();
             }
-        });
+        });*/
         endTxtview = (EditText)findViewById(R.id.endtime);
         txtview.setOnClickListener(new View.OnClickListener() {
             @Override

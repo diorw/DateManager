@@ -20,8 +20,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wangchang.testbottomnavigationbar.Been.SimpleTaskBeen;
+import com.example.wangchang.testbottomnavigationbar.Been.TaskBeen;
+import com.example.wangchang.testbottomnavigationbar.DaoMaster;
+import com.example.wangchang.testbottomnavigationbar.DaoSession;
 import com.example.wangchang.testbottomnavigationbar.R;
 import com.example.wangchang.testbottomnavigationbar.TaskAdapter;
+import com.example.wangchang.testbottomnavigationbar.TaskBeenDao;
 import com.example.wangchang.testbottomnavigationbar.TaskSettingactivity;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
@@ -42,7 +46,7 @@ public class MusicFragment extends Fragment {
     private RecyclerView recyclerView;
     MaterialCalendarView widget;
     public List<SimpleTaskBeen> tasks;
-
+    private TaskBeenDao taskBeenDao;
     private String[] tasktitle = {"背单词","给XXX打电话"};
     private Boolean[] iscomplete = {true,true};
     @Nullable
@@ -51,18 +55,23 @@ public class MusicFragment extends Fragment {
         View view = inflater.inflate(R.layout.datetasklayout, container, false);
         recyclerView  = (RecyclerView)view.findViewById(R.id.taskrecycleview);
         widget = (MaterialCalendarView)view.findViewById(R.id.calendarView);
+
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        DaoMaster.DevOpenHelper devopenhelper = new DaoMaster.DevOpenHelper(getContext(),"task-db",null);
+        DaoMaster daomaster = new DaoMaster(devopenhelper.getWritableDatabase());
+        DaoSession daosession = daomaster.newSession();
+        taskBeenDao = daosession.getTaskBeenDao();
+      //  TaskBeen newTask = new TaskBeen(null,);
         recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         initdata();
         final TaskAdapter taskAdapter = new TaskAdapter(tasks);
         recyclerView.setAdapter(taskAdapter);
-        widget.setOnDateChangedListener(new OnDateSelectedListener() {
+       widget.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
                 Toast.makeText(getContext(),date.toString(),Toast.LENGTH_LONG).show();
@@ -76,11 +85,8 @@ public class MusicFragment extends Fragment {
             }
         });
 
-        /*月份变化事件
-        public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
-            //noinspection ConstantConditions
-            getSupportActionBar().setTitle(FORMATTER.format(date.getDate()));
-        }*/
+
+
 
         //      tv.setText(getArguments().getString("ARGS"));
 
