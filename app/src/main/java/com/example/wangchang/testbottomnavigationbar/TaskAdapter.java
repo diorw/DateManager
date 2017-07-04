@@ -44,7 +44,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.taskView>{
             imageView= (ImageView) itemView.findViewById(R.id.istaskcomplete);
 
             textView= (TextView) itemView.findViewById(R.id.tasktitle);
-    //        textView.setOnClickListener(this);
+           textView.setOnClickListener(this);
         }
 
         @Override

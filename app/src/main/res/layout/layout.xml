@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -19,7 +21,7 @@
             android:layout_marginTop="24dp"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            app:materialIcon="account"
+            app:materialIcon="format_title"
             app:materialIconColor="#ADADAD"
             app:materialIconSize="24dp"
             android:scaleType="center"
@@ -36,7 +38,7 @@
                 android:textSize="16dp"
                 android:paddingBottom="16dp"
                 android:id="@+id/tasktitle_set"
-                android:hint="姓名"/>
+                android:hint="标题"/>
         </com.wrapp.floatlabelededittext.FloatLabeledEditText>
     </LinearLayout>
 
@@ -51,7 +53,7 @@
             android:layout_marginTop="24dp"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            app:materialIcon="account"
+            app:materialIcon="clock_start"
             app:materialIconColor="#ADADAD"
             app:materialIconSize="24dp"
             android:scaleType="center"
@@ -77,7 +79,7 @@
             android:layout_marginTop="24dp"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            app:materialIcon="account"
+            app:materialIcon="clock_end"
             app:materialIconColor="#ADADAD"
             app:materialIconSize="24dp"
             android:scaleType="center"
@@ -95,6 +97,73 @@
                 android:paddingBottom="16dp"
                 android:id="@+id/endtime"
                 android:hint="结束时间"/>
+        </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <com.gc.materialdesign.views.CheckBox
+            android:id="@+id/checkboxMan"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="14dp"
+            android:layout_height="wrap_content"
+            android:background="#1E88E5"
+            materialdesign:check="true"
+            />
+        <TextView
+            android:layout_marginLeft="4dp"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_height="wrap_content"
+            android:text="闹钟提醒我"
+            android:layout_gravity="center_vertical"
+            android:textSize="16sp"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <net.steamcrafted.materialiconlib.MaterialIconView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="24dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:materialIcon="clock"
+            app:materialIconColor="#ADADAD"
+            app:materialIconSize="24dp"
+            android:scaleType="center"
+
+
+            />
+        <com.wrapp.floatlabelededittext.FloatLabeledEditText
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            >
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:paddingBottom="16dp"
+                android:id="@+id/remind_time"
+                android:hint="提醒时间"/>
+        </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+        <com.wrapp.floatlabelededittext.FloatLabeledEditText
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            >
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:paddingBottom="16dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/frequence"
+                android:hint="频率"/>
         </com.wrapp.floatlabelededittext.FloatLabeledEditText>
     </LinearLayout>
     <!--<com.appyvet.rangebar.RangeBar-->
