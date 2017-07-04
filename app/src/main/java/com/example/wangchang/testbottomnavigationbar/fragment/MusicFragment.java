@@ -23,6 +23,7 @@ import com.example.wangchang.testbottomnavigationbar.Been.SimpleTaskBeen;
 import com.example.wangchang.testbottomnavigationbar.Been.TaskBeen;
 import com.example.wangchang.testbottomnavigationbar.DaoMaster;
 import com.example.wangchang.testbottomnavigationbar.DaoSession;
+import com.example.wangchang.testbottomnavigationbar.EventDecorator;
 import com.example.wangchang.testbottomnavigationbar.R;
 import com.example.wangchang.testbottomnavigationbar.TaskAdapter;
 import com.example.wangchang.testbottomnavigationbar.TaskBeenDao;
@@ -47,10 +48,12 @@ public class MusicFragment extends Fragment {
     private TextView textView;
     private RecyclerView recyclerView;
     MaterialCalendarView widget;
-    public List<SimpleTaskBeen> tasks;
+    public List<TaskBeen> tasks;
     private TaskBeenDao taskBeenDao;
+    private String now;
     private String[] tasktitle = {"背单词","给XXX打电话"};
     private Boolean[] iscomplete = {true,true};
+    private TaskAdapter taskAdapter;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -68,18 +71,24 @@ public class MusicFragment extends Fragment {
         DaoMaster daomaster = new DaoMaster(devopenhelper.getWritableDatabase());
         DaoSession daosession = daomaster.newSession();
         taskBeenDao = daosession.getTaskBeenDao();
-      //  TaskBeen newTask = new TaskBeen(null,);
+        TaskBeen newTask = new TaskBeen(2,"2017-7-6",null,null,null,false,null,"约饭");
+        taskBeenDao.insert(newTask);
         recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        initdata();
-        final TaskAdapter taskAdapter = new TaskAdapter(tasks);
+        tasks = taskBeenDao.queryBuilder().where(TaskBeenDao.Properties.Date.eq("2017-7-1")).build().list();
+        taskAdapter = new TaskAdapter(tasks);
         recyclerView.setAdapter(taskAdapter);
+       // widget.addDecorators(new EventDecorator(R.color.green,hashset));
        widget.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
                 String temp = date.toString();
-                String ans = temp.substring(temp.indexOf("}")+1,temp.lastIndexOf("{"));
-                Log.d("MusicFragment", "onDateSelected: "+ans);
-                Toast.makeText(getContext(), ans,Toast.LENGTH_LONG).show();
+                now = temp.substring(temp.lastIndexOf("{")+1,temp.lastIndexOf("}"));
+                tasks.clear();
+                tasks.addAll(taskBeenDao.queryBuilder().where(TaskBeenDao.Properties.Date.eq(now)).build().list());
+                taskAdapter.notifyDataSetChanged();
+
+                Log.d("change", "onDateSelected: "+tasks.size());
+                //Toast.makeText(getContext(), now,Toast.LENGTH_LONG).show();
             }
         });
         taskAdapter.setonItemClickListener(new TaskAdapter.OnItemClickListener() {
@@ -130,6 +139,8 @@ public class MusicFragment extends Fragment {
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                TaskBeen temp= tasks.get(viewHolder.getAdapterPosition());
+                taskBeenDao.delete(temp);
                 tasks.remove(viewHolder.getAdapterPosition());
                // int temp = viewHolder.getAdapterPosition();
              //   Log.d("Debug__________", "onSwiped: "+temp);
@@ -154,13 +165,13 @@ public class MusicFragment extends Fragment {
         }
         return FORMATTER.format(date.getDate());
     }
-    public void initdata(){
+   /* public void initdata(){
         tasks = new ArrayList();
         for(int i = 0;i<2;i++){
             SimpleTaskBeen simpleTaskBeen = new SimpleTaskBeen(tasktitle[i],iscomplete[i]);
             tasks.add(simpleTaskBeen);
         }
-    }
+    }*/
     //为了解决在滑动删除元素时删除第一个元素造成的异常，重写了linearlayoutmanager，捕获该异常。
     public class WrapContentLinearLayoutManager extends LinearLayoutManager {
         public WrapContentLinearLayoutManager(Context context) {

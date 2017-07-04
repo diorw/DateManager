@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.wangchang.testbottomnavigationbar.Been.SimpleTaskBeen;
+import com.example.wangchang.testbottomnavigationbar.Been.TaskBeen;
 
 import java.util.List;
 
@@ -17,8 +18,8 @@ import java.util.List;
  */
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.taskView>{
-    private List<SimpleTaskBeen> tasks;
-    public  TaskAdapter(List<SimpleTaskBeen> tasks){
+    private List<TaskBeen> tasks;
+    public  TaskAdapter(List<TaskBeen> tasks){
         this.tasks = tasks;
     }
     public static OnItemClickListener itemClickListener;
@@ -66,7 +67,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.taskView>{
 
         holder.imageView.setImageResource(R.drawable.ic_task_finished);
       //  holder.imageView.setVisibility(View.VISIBLE);
-       if(tasks.get(position).isCompleted()==true){
+       if(tasks.get(position).getIsCompleted()==true){
             holder.imageView.setVisibility(View.VISIBLE);
         }else{
             holder.imageView.setVisibility(View.INVISIBLE);
