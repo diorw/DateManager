@@ -37,6 +37,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static android.support.v7.widget.StaggeredGridLayoutManager.TAG;
+
 /**
  * Created by WangChang on 2016/5/15.
  */
@@ -74,7 +76,10 @@ public class MusicFragment extends Fragment {
        widget.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-                Toast.makeText(getContext(),date.toString(),Toast.LENGTH_LONG).show();
+                String temp = date.toString();
+                String ans = temp.substring(temp.indexOf("}")+1,temp.lastIndexOf("{"));
+                Log.d("MusicFragment", "onDateSelected: "+ans);
+                Toast.makeText(getContext(), ans,Toast.LENGTH_LONG).show();
             }
         });
         taskAdapter.setonItemClickListener(new TaskAdapter.OnItemClickListener() {
