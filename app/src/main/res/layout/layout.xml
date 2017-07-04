@@ -7,8 +7,9 @@
     android:orientation="vertical">
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
+        android:id="@+id/task_toolbar"
         android:layout_height="?attr/actionBarSize"
-        android:title="任务详细设置"
+
         />
     <LinearLayout
         android:layout_width="match_parent"
@@ -68,9 +69,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
+                android:editable="false"
                 android:paddingBottom="16dp"
                 android:id="@+id/starttime"
-                android:hint="结束时间"/>
+                android:hint="开始时间"/>
         </com.wrapp.floatlabelededittext.FloatLabeledEditText>
         <net.steamcrafted.materialiconlib.MaterialIconView
             xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -94,6 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
+                android:editable="false"
                 android:paddingBottom="16dp"
                 android:id="@+id/endtime"
                 android:hint="结束时间"/>
@@ -147,6 +150,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16dp"
+                android:editable="false"
                 android:paddingBottom="16dp"
                 android:id="@+id/remind_time"
                 android:hint="提醒时间"/>

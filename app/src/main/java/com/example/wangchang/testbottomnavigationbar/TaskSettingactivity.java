@@ -11,8 +11,11 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ListPopupWindow;
+import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ActionMenuView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -44,6 +47,12 @@ public class TaskSettingactivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.task_toolbar);
+        toolbar.setTitle("任务详细设置");
+
         lists.add("一次性");
         lists.add("每天");
         lists.add("每周");
@@ -53,8 +62,8 @@ public class TaskSettingactivity extends AppCompatActivity {
         fre = (EditText)findViewById(R.id.frequence);
         mListPop = new ListPopupWindow(this);
         mListPop.setAdapter(new ArrayAdapter<String>(this,R.layout.frequenceitemlayout,lists));
-        mListPop.setWidth(LinearLayout.LayoutParams.WRAP_CONTENT);
-        mListPop.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
+        mListPop.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        mListPop.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         mListPop.setModal(true);
         mListPop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
