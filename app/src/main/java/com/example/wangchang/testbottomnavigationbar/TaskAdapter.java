@@ -44,7 +44,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.taskView>{
             imageView= (ImageView) itemView.findViewById(R.id.istaskcomplete);
 
             textView= (TextView) itemView.findViewById(R.id.tasktitle);
-            textView.setOnClickListener(this);
+    //        textView.setOnClickListener(this);
         }
 
         @Override
@@ -65,7 +65,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.taskView>{
     public void onBindViewHolder(taskView holder, int position) {
 
         holder.imageView.setImageResource(R.drawable.ic_task_finished);
-        if(tasks.get(position).isCompleted()){
+      //  holder.imageView.setVisibility(View.VISIBLE);
+       if(tasks.get(position).isCompleted()==true){
             holder.imageView.setVisibility(View.VISIBLE);
         }else{
             holder.imageView.setVisibility(View.INVISIBLE);
