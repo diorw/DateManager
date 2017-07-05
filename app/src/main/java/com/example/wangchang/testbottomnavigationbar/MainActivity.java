@@ -1,6 +1,7 @@
 package com.example.wangchang.testbottomnavigationbar;
 
 import android.graphics.Color;
+import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -16,7 +17,10 @@ import com.example.wangchang.testbottomnavigationbar.fragment.HomeFragment;
 import com.example.wangchang.testbottomnavigationbar.fragment.MusicFragment;
 import com.example.wangchang.testbottomnavigationbar.fragment.TvFragment;
 
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener {
     private ArrayList<Fragment> fragments;
@@ -25,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         BottomNavigationBar bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
         bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
         bottomNavigationBar
@@ -44,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 .initialise();
 
         fragments = getFragments();
+
+
         setDefaultFragment();
         bottomNavigationBar.setTabSelectedListener(this);
     }

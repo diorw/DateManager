@@ -5,6 +5,8 @@ import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.Generated;
 
+import java.util.Date;
+
 /**
  * Created by ACM on 2017/7/2.
  */
@@ -55,6 +57,14 @@ public class TaskBeen {
         this.Id = Id;
     }
 
+    public String getDate() {
+        return this.date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     public String getStartTime() {
         return this.StartTime;
     }
@@ -103,12 +113,6 @@ public class TaskBeen {
         this.title = title;
     }
 
-    public String getDate() {
-        return this.date;
-    }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
    
 }
