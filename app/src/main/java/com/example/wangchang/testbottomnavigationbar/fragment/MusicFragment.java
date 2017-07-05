@@ -56,11 +56,10 @@ public class MusicFragment extends Fragment {
     public List<TaskBeen> alltasks;
     private TaskBeenDao taskBeenDao;
     private String now;
-    private String[] tasktitle = {"背单词","给XXX打电话"};
-    private Boolean[] iscomplete = {true,true};
     private TaskAdapter taskAdapter;
     private HashSet<CalendarDay> hashset = new HashSet<>();
     private Date datetemp;
+    private java.sql.Date sdate;//当前选中的日期
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -84,7 +83,7 @@ public class MusicFragment extends Fragment {
         Log.d("nowtime", "onActivityCreated: "+now);
       /*  TaskBeen newTask = new TaskBeen(1,now,null,null,null,false,null,"约饭2");
         taskBeenDao.insert(newTask);*/
-        //给含有任务的天加绿点
+
         alltasks = taskBeenDao.loadAll();
      //   Log.d("tasklenth", "onActivityCreated: "+alltasks.size());
         for(int i = 0;i<alltasks.size();i++){
@@ -106,11 +105,12 @@ public class MusicFragment extends Fragment {
         tasks = taskBeenDao.queryBuilder().where(TaskBeenDao.Properties.Date.eq(now)).build().list();
         taskAdapter = new TaskAdapter(tasks);
         recyclerView.setAdapter(taskAdapter);
+        //给含有任务的天加绿点
         widget.addDecorators(new EventDecorator(R.color.green,hashset));
         widget.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-                java.sql.Date sdate = new java.sql.Date(date.getDate().getTime());
+                sdate = new java.sql.Date(date.getDate().getTime());
                 tasks.clear();
                 tasks.addAll(taskBeenDao.queryBuilder().where(TaskBeenDao.Properties.Date.eq(sdate.toString())).build().list());
                 taskAdapter.notifyDataSetChanged();
@@ -123,6 +123,7 @@ public class MusicFragment extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(getContext(), TaskSettingactivity.class);
+                intent.putExtra("taskId",tasks.get(position).getId());
                 startActivity(intent);
             }
         });
