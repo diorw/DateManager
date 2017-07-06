@@ -1,4 +1,4 @@
-package com.example.wangchang.testbottomnavigationbar.Been;
+package com.example.wangchang.wda1150_xwk1151.Been;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;

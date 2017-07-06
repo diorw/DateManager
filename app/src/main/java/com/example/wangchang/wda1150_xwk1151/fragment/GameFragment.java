@@ -1,24 +1,21 @@
-package com.example.wangchang.testbottomnavigationbar.fragment;
+package com.example.wangchang.wda1150_xwk1151.fragment;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import android.widget.GridView;
-import android.widget.ImageButton;
 
-import com.example.wangchang.testbottomnavigationbar.AccountBeenDao;
-import com.example.wangchang.testbottomnavigationbar.Been.AccountBeen;
-import com.example.wangchang.testbottomnavigationbar.DaoMaster;
-import com.example.wangchang.testbottomnavigationbar.DaoSession;
-import com.example.wangchang.testbottomnavigationbar.MonthAdapter;
-import com.example.wangchang.testbottomnavigationbar.R;
+import com.example.wangchang.wda1150_xwk1151.AccountBeenDao;
+import com.example.wangchang.wda1150_xwk1151.Been.AccountBeen;
+import com.example.wangchang.wda1150_xwk1151.DaoMaster;
+import com.example.wangchang.wda1150_xwk1151.DaoSession;
+import com.example.wangchang.wda1150_xwk1151.MonthAdapter;
+import com.example.wangchang.wda1150_xwk1151.R;
 
 import java.util.ArrayList;
 import java.util.List;

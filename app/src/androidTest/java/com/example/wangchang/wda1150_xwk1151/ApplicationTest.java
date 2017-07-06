@@ -1,4 +1,4 @@
-package com.example.wangchang.testbottomnavigationbar;
+package com.example.wangchang.wda1150_xwk1151;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

@@ -1,18 +1,16 @@
-package com.example.wangchang.testbottomnavigationbar.fragment;
+package com.example.wangchang.wda1150_xwk1151.fragment;
 
 import android.app.Dialog;
 
 import android.app.FragmentManager;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
-import android.app.Dialog;
 import android.app.DialogFragment;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.wangchang.testbottomnavigationbar.R;
+import com.example.wangchang.wda1150_xwk1151.R;
 
 import java.util.Calendar;
 

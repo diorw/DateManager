@@ -1,4 +1,4 @@
-package com.example.wangchang.testbottomnavigationbar.Been;
+package com.example.wangchang.wda1150_xwk1151.Been;
 
 /**
  * Created by ACM on 2017/7/2.

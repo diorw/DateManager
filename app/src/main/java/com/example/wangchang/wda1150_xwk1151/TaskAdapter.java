@@ -1,15 +1,13 @@
-package com.example.wangchang.testbottomnavigationbar;
+package com.example.wangchang.wda1150_xwk1151;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.wangchang.testbottomnavigationbar.Been.SimpleTaskBeen;
-import com.example.wangchang.testbottomnavigationbar.Been.TaskBeen;
+import com.example.wangchang.wda1150_xwk1151.Been.TaskBeen;
 
 import java.util.List;
 

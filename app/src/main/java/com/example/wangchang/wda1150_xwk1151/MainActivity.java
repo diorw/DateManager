@@ -1,7 +1,6 @@
-package com.example.wangchang.testbottomnavigationbar;
+package com.example.wangchang.wda1150_xwk1151;
 
 import android.graphics.Color;
-import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -11,16 +10,13 @@ import android.os.Bundle;
 import com.ashokvarma.bottomnavigation.BadgeItem;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
-import com.example.wangchang.testbottomnavigationbar.fragment.BookFragment;
-import com.example.wangchang.testbottomnavigationbar.fragment.GameFragment;
-import com.example.wangchang.testbottomnavigationbar.fragment.HomeFragment;
-import com.example.wangchang.testbottomnavigationbar.fragment.MusicFragment;
-import com.example.wangchang.testbottomnavigationbar.fragment.TvFragment;
+import com.example.wangchang.wda1150_xwk1151.fragment.BookFragment;
+import com.example.wangchang.wda1150_xwk1151.fragment.GameFragment;
+import com.example.wangchang.wda1150_xwk1151.fragment.HomeFragment;
+import com.example.wangchang.wda1150_xwk1151.fragment.MusicFragment;
+import com.example.wangchang.wda1150_xwk1151.fragment.TvFragment;
 
-import java.io.FileDescriptor;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener {
     private ArrayList<Fragment> fragments;
@@ -40,17 +36,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 .setBackgroundColor(Color.RED)
                 .setText("5")
                 .setHideOnSelect(true);
-        bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.ic_home_white_24dp, "Home").setActiveColorResource(R.color.orange).setBadgeItem(numberBadgeItem))
+        bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.ic_music_note_white_24dp, "Music").setActiveColorResource(R.color.blue))
                 .addItem(new BottomNavigationItem(R.mipmap.ic_book_white_24dp, "Books").setActiveColorResource(R.color.teal))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_music_note_white_24dp, "Music").setActiveColorResource(R.color.blue))
+                .addItem(new BottomNavigationItem(R.mipmap.ic_home_white_24dp, "Home").setActiveColorResource(R.color.orange))
                 .addItem(new BottomNavigationItem(R.mipmap.ic_tv_white_24dp, "Movies & TV").setActiveColorResource(R.color.brown))
                 .addItem(new BottomNavigationItem(R.mipmap.ic_videogame_asset_white_24dp, "Games").setActiveColorResource(R.color.grey).setBadgeItem(numberBadgeItem))
                 .setFirstSelectedPosition(0)
                 .initialise();
 
         fragments = getFragments();
-
-
         setDefaultFragment();
         bottomNavigationBar.setTabSelectedListener(this);
     }
@@ -61,15 +55,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     private void setDefaultFragment() {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
-        transaction.replace(R.id.layFrame, HomeFragment.newInstance("Home"));
+        transaction.replace(R.id.layFrame, HomeFragment.newInstance("Music"));
         transaction.commit();
     }
 
     private ArrayList<Fragment> getFragments() {
         ArrayList<Fragment> fragments = new ArrayList<>();
-        fragments.add(HomeFragment.newInstance("Home"));
+        fragments.add(MusicFragment.newInstance("Home"));
         fragments.add(BookFragment.newInstance("Books"));
-        fragments.add(MusicFragment.newInstance("Music"));
+        fragments.add(HomeFragment.newInstance("Music"));
         fragments.add(TvFragment.newInstance("Movies & TV"));
         fragments.add(GameFragment.newInstance("Games"));
         return fragments;

@@ -1,4 +1,4 @@
-package com.example.wangchang.testbottomnavigationbar;
+package com.example.wangchang.wda1150_xwk1151;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -21,14 +21,14 @@ public class DaoMaster extends AbstractDaoMaster {
 
     /** Creates underlying database table using DAOs. */
     public static void createAllTables(Database db, boolean ifNotExists) {
-        AccountBeenDao.createTable(db, ifNotExists);
         TaskBeenDao.createTable(db, ifNotExists);
+        AccountBeenDao.createTable(db, ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
     public static void dropAllTables(Database db, boolean ifExists) {
-        AccountBeenDao.dropTable(db, ifExists);
         TaskBeenDao.dropTable(db, ifExists);
+        AccountBeenDao.dropTable(db, ifExists);
     }
 
     /**
@@ -47,8 +47,8 @@ public class DaoMaster extends AbstractDaoMaster {
 
     public DaoMaster(Database db) {
         super(db, SCHEMA_VERSION);
-        registerDaoClass(AccountBeenDao.class);
         registerDaoClass(TaskBeenDao.class);
+        registerDaoClass(AccountBeenDao.class);
     }
 
     public DaoSession newSession() {

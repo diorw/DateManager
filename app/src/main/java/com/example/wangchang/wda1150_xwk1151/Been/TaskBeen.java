@@ -1,11 +1,9 @@
-package com.example.wangchang.testbottomnavigationbar.Been;
+package com.example.wangchang.wda1150_xwk1151.Been;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.Generated;
-
-import java.util.Date;
 
 /**
  * Created by ACM on 2017/7/2.
@@ -25,15 +23,15 @@ public class TaskBeen {
     //任务是否已经完成
     private Boolean isCompleted;
     //提醒时间
-    private Boolean RemindTime;
+    private String RemindTime;
     //任务标题
 
     @NotNull
     private String title;
 
-    @Generated(hash = 1067521046)
+    @Generated(hash = 626747351)
     public TaskBeen(long Id, @NotNull String date, String StartTime, String EndTime,
-            String Description, Boolean isCompleted, Boolean RemindTime,
+            String Description, Boolean isCompleted, String RemindTime,
             @NotNull String title) {
         this.Id = Id;
         this.date = date;
@@ -97,11 +95,11 @@ public class TaskBeen {
         this.isCompleted = isCompleted;
     }
 
-    public Boolean getRemindTime() {
+    public String getRemindTime() {
         return this.RemindTime;
     }
 
-    public void setRemindTime(Boolean RemindTime) {
+    public void setRemindTime(String RemindTime) {
         this.RemindTime = RemindTime;
     }
 
@@ -112,6 +110,8 @@ public class TaskBeen {
     public void setTitle(String title) {
         this.title = title;
     }
+
+
 
 
    

@@ -1,4 +1,4 @@
-package com.example.wangchang.testbottomnavigationbar;
+package com.example.wangchang.wda1150_xwk1151;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;

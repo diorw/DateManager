@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.wangchang.testbottomnavigationbar.fragment;
+package com.example.wangchang.wda1150_xwk1151.fragment;
 
 import android.content.Context;
 import android.graphics.Outline;
@@ -23,7 +23,7 @@ import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.widget.FrameLayout;
 
-import com.example.wangchang.testbottomnavigationbar.R;
+import com.example.wangchang.wda1150_xwk1151.R;
 
 @SuppressWarnings("UnusedDeclaration")
 public class CardFrameLayout extends FrameLayout {

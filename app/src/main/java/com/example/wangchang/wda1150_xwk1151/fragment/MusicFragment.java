@@ -1,12 +1,12 @@
-package com.example.wangchang.testbottomnavigationbar.fragment;
+package com.example.wangchang.wda1150_xwk1151.fragment;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import com.gc.materialdesign.views.ButtonFloatSmall;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -16,33 +16,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.wangchang.testbottomnavigationbar.Been.SimpleTaskBeen;
-import com.example.wangchang.testbottomnavigationbar.Been.TaskBeen;
-import com.example.wangchang.testbottomnavigationbar.DaoMaster;
-import com.example.wangchang.testbottomnavigationbar.DaoSession;
-import com.example.wangchang.testbottomnavigationbar.EventDecorator;
-import com.example.wangchang.testbottomnavigationbar.R;
-import com.example.wangchang.testbottomnavigationbar.TaskAdapter;
-import com.example.wangchang.testbottomnavigationbar.TaskBeenDao;
-import com.example.wangchang.testbottomnavigationbar.TaskSettingactivity;
+import com.example.wangchang.wda1150_xwk1151.Been.TaskBeen;
+import com.example.wangchang.wda1150_xwk1151.DaoMaster;
+import com.example.wangchang.wda1150_xwk1151.DaoSession;
+import com.example.wangchang.wda1150_xwk1151.EventDecorator;
+import com.example.wangchang.wda1150_xwk1151.R;
+import com.example.wangchang.wda1150_xwk1151.TaskAdapter;
+import com.example.wangchang.wda1150_xwk1151.TaskBeenDao;
+import com.example.wangchang.wda1150_xwk1151.TaskSettingactivity;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
-
+import com.gc.materialdesign.views.ButtonRectangle;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
-
-import static android.support.v7.widget.StaggeredGridLayoutManager.TAG;
 
 /**
  * Created by WangChang on 2016/5/15.
@@ -59,6 +54,7 @@ public class MusicFragment extends Fragment {
     private TaskAdapter taskAdapter;
     private HashSet<CalendarDay> hashset = new HashSet<>();
     private Date datetemp;
+    private ButtonRectangle addtask;
     private java.sql.Date sdate;//当前选中的日期
     @Nullable
     @Override
@@ -70,6 +66,7 @@ public class MusicFragment extends Fragment {
         DaoMaster daomaster = new DaoMaster(devopenhelper.getWritableDatabase());
         DaoSession daosession = daomaster.newSession();
         taskBeenDao = daosession.getTaskBeenDao();
+        addtask = (ButtonRectangle) view.findViewById(R.id.addtask);
         return view;
     }
 
@@ -127,7 +124,19 @@ public class MusicFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
+        addtask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(),TaskSettingactivity.class);
+                intent.putExtra("taskId",-1);
+                if(sdate==null){
+                    Toast.makeText(getContext(),"请选择一个日期",Toast.LENGTH_LONG).show();
+                }else {
+                    intent.putExtra("date", sdate.toString());
+                    startActivity(intent);
+                }
+            }
+        });
 
 
 

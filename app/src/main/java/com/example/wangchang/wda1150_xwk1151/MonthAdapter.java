@@ -1,16 +1,12 @@
-package com.example.wangchang.testbottomnavigationbar;
+package com.example.wangchang.wda1150_xwk1151;
 
 import android.content.Context;
 import android.support.v4.app.FragmentActivity;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.example.wangchang.testbottomnavigationbar.fragment.GameFragment;
 
 import java.util.ArrayList;
 

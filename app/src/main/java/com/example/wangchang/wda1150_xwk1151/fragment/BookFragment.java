@@ -1,4 +1,4 @@
-package com.example.wangchang.testbottomnavigationbar.fragment;
+package com.example.wangchang.wda1150_xwk1151.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.wangchang.testbottomnavigationbar.R;
+import com.example.wangchang.wda1150_xwk1151.R;
 
 /**
  * Created by WangChang on 2016/5/15.
