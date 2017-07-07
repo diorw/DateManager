@@ -15,14 +15,14 @@ public class AccountBeen {
     private long id;
     @NotNull
     private String name;
-    //显示收入还是支出类型：1为收入，2为支出
-    private int type;
+    //显示收入还是支出
+    private String type;
     private double money;
     private String month;
     private String date;
     private String introduce;
-    @Generated(hash = 647810511)
-    public AccountBeen(long id, @NotNull String name, int type, double money,
+    @Generated(hash = 1005976583)
+    public AccountBeen(long id, @NotNull String name, String type, double money,
             String month, String date, String introduce) {
         this.id = id;
         this.name = name;
@@ -47,10 +47,10 @@ public class AccountBeen {
     public void setName(String name) {
         this.name = name;
     }
-    public int getType() {
+    public String getType() {
         return this.type;
     }
-    public void setType(int type) {
+    public void setType(String type) {
         this.type = type;
     }
     public double getMoney() {
@@ -77,6 +77,7 @@ public class AccountBeen {
     public void setIntroduce(String introduce) {
         this.introduce = introduce;
     }
+   
 
 
     

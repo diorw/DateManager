@@ -26,7 +26,7 @@ public class AccountBeenDao extends AbstractDao<AccountBeen, Long> {
     public static class Properties {
         public final static Property Id = new Property(0, long.class, "id", true, "_id");
         public final static Property Name = new Property(1, String.class, "name", false, "NAME");
-        public final static Property Type = new Property(2, int.class, "type", false, "TYPE");
+        public final static Property Type = new Property(2, String.class, "type", false, "TYPE");
         public final static Property Money = new Property(3, double.class, "money", false, "MONEY");
         public final static Property Month = new Property(4, String.class, "month", false, "MONTH");
         public final static Property Date = new Property(5, String.class, "date", false, "DATE");
@@ -48,7 +48,7 @@ public class AccountBeenDao extends AbstractDao<AccountBeen, Long> {
         db.execSQL("CREATE TABLE " + constraint + "\"ACCOUNT_BEEN\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ," + // 0: id
                 "\"NAME\" TEXT NOT NULL ," + // 1: name
-                "\"TYPE\" INTEGER NOT NULL ," + // 2: type
+                "\"TYPE\" TEXT," + // 2: type
                 "\"MONEY\" REAL NOT NULL ," + // 3: money
                 "\"MONTH\" TEXT," + // 4: month
                 "\"DATE\" TEXT," + // 5: date
@@ -66,7 +66,11 @@ public class AccountBeenDao extends AbstractDao<AccountBeen, Long> {
         stmt.clearBindings();
         stmt.bindLong(1, entity.getId());
         stmt.bindString(2, entity.getName());
-        stmt.bindLong(3, entity.getType());
+ 
+        String type = entity.getType();
+        if (type != null) {
+            stmt.bindString(3, type);
+        }
         stmt.bindDouble(4, entity.getMoney());
  
         String month = entity.getMonth();
@@ -90,7 +94,11 @@ public class AccountBeenDao extends AbstractDao<AccountBeen, Long> {
         stmt.clearBindings();
         stmt.bindLong(1, entity.getId());
         stmt.bindString(2, entity.getName());
-        stmt.bindLong(3, entity.getType());
+ 
+        String type = entity.getType();
+        if (type != null) {
+            stmt.bindString(3, type);
+        }
         stmt.bindDouble(4, entity.getMoney());
  
         String month = entity.getMonth();
@@ -119,7 +127,7 @@ public class AccountBeenDao extends AbstractDao<AccountBeen, Long> {
         AccountBeen entity = new AccountBeen( //
             cursor.getLong(offset + 0), // id
             cursor.getString(offset + 1), // name
-            cursor.getInt(offset + 2), // type
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // type
             cursor.getDouble(offset + 3), // money
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // month
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // date
@@ -132,7 +140,7 @@ public class AccountBeenDao extends AbstractDao<AccountBeen, Long> {
     public void readEntity(Cursor cursor, AccountBeen entity, int offset) {
         entity.setId(cursor.getLong(offset + 0));
         entity.setName(cursor.getString(offset + 1));
-        entity.setType(cursor.getInt(offset + 2));
+        entity.setType(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setMoney(cursor.getDouble(offset + 3));
         entity.setMonth(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
         entity.setDate(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
