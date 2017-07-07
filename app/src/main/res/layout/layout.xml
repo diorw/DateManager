@@ -30,7 +30,7 @@
             android:id="@+id/titleicon"
             />
         <com.wrapp.floatlabelededittext.FloatLabeledEditText
-            android:layout_width="300dp"
+            android:layout_width="280dp"
             android:layout_height="wrap_content"
             >
             <EditText
@@ -170,15 +170,23 @@
                 android:hint="频率"/>
         </com.wrapp.floatlabelededittext.FloatLabeledEditText>
     </LinearLayout>
-    <!--<com.appyvet.rangebar.RangeBar-->
-        <!--xmlns:custom="http://schemas.android.com/apk/res-auto"-->
-        <!--android:id="@+id/rangebar"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="72dp"-->
-        <!--custom:tickStart="1"-->
-        <!--custom:tickInterval="1"-->
-        <!--custom:tickEnd="24"-->
-        <!--android:layout_marginLeft="16dp"-->
-        <!--android:layout_marginRight="16dp"/>-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:alpha="0.87"
+        android:text="任务描述"/>
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="8dp">
+        <EditText
+            android:id="@+id/task_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minLines="3"
+            android:gravity="top"
+            android:textSize="18sp" />
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>

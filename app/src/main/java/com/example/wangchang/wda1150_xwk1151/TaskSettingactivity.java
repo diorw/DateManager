@@ -9,8 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.menu.ActionMenuItemView;
 import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
@@ -31,8 +35,9 @@ public class TaskSettingactivity extends AppCompatActivity {
     private EditText endTxtview;
     private ListPopupWindow mListPop;
     private EditText fre;
+    private EditText description;
     private EditText remind_time;
-    private List<String> lists =  new ArrayList<>();
+    private List<String> lists;
     private ActionMenuItemView save;
     private long taskid;
     private TaskBeen tasknow;
@@ -50,6 +55,7 @@ public class TaskSettingactivity extends AppCompatActivity {
         toolbar.setTitle("任务详细设置");
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         toolbar.inflateMenu(R.menu.task_toolbar_menu);
+        lists = new ArrayList<String>();
         lists.add("一次性");
         lists.add("每天");
         lists.add("每周");
@@ -58,11 +64,11 @@ public class TaskSettingactivity extends AppCompatActivity {
         DaoMaster daomaster = new DaoMaster(devopenhelper.getWritableDatabase());
         DaoSession daosession = daomaster.newSession();
         final TaskBeenDao taskBeenDao = daosession.getTaskBeenDao();
-
+        description = (EditText)findViewById(R.id.task_description);
         startTxtview = (EditText)findViewById(R.id.starttime);
         remind_time = (EditText)findViewById(R.id.remind_time);
         titleView = (EditText)findViewById(R.id.tasktitle_set);
-        fre = (EditText)findViewById(R.id.frequence);
+
         endTxtview = (EditText)findViewById(R.id.endtime);
         taskid = getIntent().getLongExtra("taskId",-1);
         if(taskid!=-1) {
@@ -70,25 +76,10 @@ public class TaskSettingactivity extends AppCompatActivity {
             startTxtview.setText(tasknow.getStartTime());
             endTxtview.setText(tasknow.getEndTime());
             titleView.setText(tasknow.getTitle());
+            description.setText(tasknow.getDescription());
         }
-     /*   mListPop = new ListPopupWindow(this);
-        mListPop.setAdapter(new ArrayAdapter<String>(this,R.layout.frequenceitemlayout,lists));
-        mListPop.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
-        mListPop.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-        mListPop.setModal(true);
-        mListPop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                fre.setText(lists.get(i));
-                mListPop.dismiss();
-            }
-        });
-        fre.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mListPop.show();
-            }
-        });*/
+       
+
 
         startTxtview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,7 +113,7 @@ public class TaskSettingactivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(taskid!=-1) {
                     tasknow.setEndTime(endTxtview.getText().toString());
-                    // tasknow.setStartTime(remind_time.getText().toString());
+                     tasknow.setRemindTime(remind_time.getText().toString());
                     tasknow.setTitle(titleView.getText().toString());
                     tasknow.setStartTime(startTxtview.getText().toString());
                     taskBeenDao.updateInTx(tasknow);
@@ -134,7 +125,7 @@ public class TaskSettingactivity extends AppCompatActivity {
                         id = temp.getId()+1;
                     }
                     String date = getIntent().getStringExtra("date");
-                    tasknow = new TaskBeen(id,date,startTxtview.getText().toString(),endTxtview.getText().toString(),null,false,remind_time.getText().toString(),titleView.getText().toString());
+                    tasknow = new TaskBeen(id,date,startTxtview.getText().toString(),endTxtview.getText().toString(),description.getText().toString(),false,remind_time.getText().toString(),titleView.getText().toString());
                     taskBeenDao.insert(tasknow);
                 }
                 Intent intent = new Intent(TaskSettingactivity.this, MainActivity.class);
