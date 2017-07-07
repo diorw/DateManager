@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import com.example.wangchang.wda1150_xwk1151.TaskSearchActivity;
 import com.gc.materialdesign.views.ButtonFloatSmall;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -55,6 +57,7 @@ public class MusicFragment extends Fragment {
     private HashSet<CalendarDay> hashset = new HashSet<>();
     private Date datetemp;
     private ButtonRectangle addtask;
+    private ButtonRectangle searchtask;
     private java.sql.Date sdate;//当前选中的日期
     @Nullable
     @Override
@@ -67,6 +70,7 @@ public class MusicFragment extends Fragment {
         DaoSession daosession = daomaster.newSession();
         taskBeenDao = daosession.getTaskBeenDao();
         addtask = (ButtonRectangle) view.findViewById(R.id.addtask);
+        searchtask = (ButtonRectangle)view.findViewById(R.id.search_task);
         return view;
     }
 
@@ -137,7 +141,13 @@ public class MusicFragment extends Fragment {
                 }
             }
         });
-
+        searchtask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(),TaskSearchActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
         //      tv.setText(getArguments().getString("ARGS"));

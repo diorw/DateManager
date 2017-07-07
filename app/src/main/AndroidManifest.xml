@@ -19,7 +19,7 @@
             android:theme="@style/AppTheme">
 
         </activity>
-
+        <activity android:name=".TaskSearchActivity"></activity>
     </application>
 
 </manifest>

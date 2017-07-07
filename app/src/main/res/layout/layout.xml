@@ -179,13 +179,17 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="8dp">
+        android:elevation="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp">
         <EditText
             android:id="@+id/task_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minLines="3"
+            android:minLines="2"
             android:gravity="top"
+            android:background="@null"
             android:textSize="18sp" />
     </android.support.v7.widget.CardView>
 

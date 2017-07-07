@@ -78,7 +78,7 @@ public class TaskSettingactivity extends AppCompatActivity {
             titleView.setText(tasknow.getTitle());
             description.setText(tasknow.getDescription());
         }
-       
+
 
 
         startTxtview.setOnClickListener(new View.OnClickListener() {

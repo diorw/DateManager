@@ -20,7 +20,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical">
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal">
         <com.gc.materialdesign.views.ButtonRectangle
             android:id="@+id/addtask"
             android:layout_width="100dp"
@@ -31,7 +32,17 @@
             android:layout_marginLeft="16dp"
 
             android:alpha="0.87"/>
+        <com.gc.materialdesign.views.ButtonRectangle
+            android:id="@+id/search_task"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:background="#1E88E5"
+            android:layout_marginStart="8dp"
+            android:text="任务查询"
+            android:elevation="2dp"
+            android:layout_marginLeft="16dp"
 
+            android:alpha="0.87"/>
     </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
