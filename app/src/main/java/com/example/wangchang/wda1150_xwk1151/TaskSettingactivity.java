@@ -1,10 +1,14 @@
 package com.example.wangchang.wda1150_xwk1151;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.content.Intent;
 
-
+import android.os.SystemClock;
+import android.provider.SyncStateContract;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.menu.ActionMenuItemView;
 import android.support.v7.widget.ListPopupWindow;
@@ -21,7 +25,9 @@ import android.widget.TimePicker;
 import com.example.wangchang.wda1150_xwk1151.Been.TaskBeen;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import static com.example.wangchang.wda1150_xwk1151.R.color.colorAccent;
 
@@ -42,6 +48,8 @@ public class TaskSettingactivity extends AppCompatActivity {
     private long taskid;
     private TaskBeen tasknow;
     private Long id;
+    private int mhour;
+    private int mminute;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,6 +136,25 @@ public class TaskSettingactivity extends AppCompatActivity {
                     tasknow = new TaskBeen(id,date,startTxtview.getText().toString(),endTxtview.getText().toString(),description.getText().toString(),false,remind_time.getText().toString(),titleView.getText().toString());
                     taskBeenDao.insert(tasknow);
                 }
+                if(tasknow.getRemindTime()!=null){
+                    Intent intentemp = new Intent(TaskSettingactivity.this,AlarmReceiver.class);
+                    intentemp.setAction("com.example.wangchang.wda1150_xwk1151.alarmAction");
+                    PendingIntent sender = PendingIntent.getBroadcast(TaskSettingactivity.this, 0, intentemp, 0);
+                    long firstTime = SystemClock.elapsedRealtime();
+                    long systemTime = System.currentTimeMillis();
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTimeInMillis(System.currentTimeMillis());
+                    calendar.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+                    calendar.set(Calendar.MINUTE, mminute);
+                    calendar.set(Calendar.HOUR_OF_DAY, mhour);
+                    calendar.set(Calendar.SECOND, 0);
+                    calendar.set(Calendar.MILLISECOND, 0);
+                    long selectTime = calendar.getTimeInMillis();
+                    long time = selectTime - systemTime;
+                    firstTime += time;
+                    AlarmManager manager = (AlarmManager)getSystemService(ALARM_SERVICE);
+                    manager.set(AlarmManager.RTC_WAKEUP, time, sender);
+                }
                 Intent intent = new Intent(TaskSettingactivity.this, MainActivity.class);
 
                 startActivity(intent);
@@ -152,6 +179,8 @@ public class TaskSettingactivity extends AppCompatActivity {
     private TimePickerDialog.OnTimeSetListener TimeListener3 = new TimePickerDialog.OnTimeSetListener(){
         @Override
         public void onTimeSet(TimePicker timePicker, int i, int i1) {
+            mhour = i ;
+            mminute = i1;
             remind_time.setText(i+":"+i1);
         }
 

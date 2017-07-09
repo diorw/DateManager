@@ -39,6 +39,7 @@
                 android:textSize="16dp"
                 android:paddingBottom="16dp"
                 android:id="@+id/tasktitle_set"
+                android:maxLines="1"
                 android:hint="标题"/>
         </com.wrapp.floatlabelededittext.FloatLabeledEditText>
     </LinearLayout>
@@ -70,6 +71,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:editable="false"
+                android:maxLines="1"
                 android:paddingBottom="16dp"
                 android:id="@+id/starttime"
                 android:hint="开始时间"/>
@@ -97,6 +99,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:editable="false"
+                android:maxLines="1"
                 android:paddingBottom="16dp"
                 android:id="@+id/endtime"
                 android:hint="结束时间"/>
@@ -151,6 +154,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="16dp"
                 android:editable="false"
+                android:maxLines="1"
                 android:paddingBottom="16dp"
                 android:id="@+id/remind_time"
                 android:hint="提醒时间"/>
@@ -166,6 +170,7 @@
                 android:textSize="16dp"
                 android:paddingBottom="16dp"
                 android:layout_marginLeft="10dp"
+                android:maxLines="1"
                 android:id="@+id/frequence"
                 android:hint="频率"/>
         </com.wrapp.floatlabelededittext.FloatLabeledEditText>
