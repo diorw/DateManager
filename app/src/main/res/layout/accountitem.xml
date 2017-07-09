@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.example.wangchang.wda1150_xwk1151.fragment.CardFrameLayout
+        style="@style/Card"
+        android:id="@+id/accountitem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        >
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:id="@+id/accountname"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:text="name"/>
+            <TextView
+                android:layout_below="@+id/accountname"
+                android:id="@+id/accountintroduce"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:maxEms="8"
+                android:ellipsize="end"
+                android:text="你猜我猜你猜我猜不猜"/>
+
+            <TextView
+                android:layout_toRightOf="@+id/accountname"
+                android:id="@+id/accountmoney"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="money"
+                android:textSize="40dp"
+                android:padding="5dp"/>
+            <TextView
+                android:layout_below="@+id/accountintroduce"
+                android:id="@+id/accounttime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2017-7-9"/>
+        </RelativeLayout>
+
+
+    </com.example.wangchang.wda1150_xwk1151.fragment.CardFrameLayout>
+
+</LinearLayout>

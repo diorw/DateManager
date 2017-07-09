@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/addaccount_dialog"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <net.steamcrafted.materialiconlib.MaterialIconView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="24dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:materialIcon="coin"
+            app:materialIconColor="#ADADAD"
+            app:materialIconSize="24dp"
+            android:scaleType="center"
+            android:id="@+id/nameicon"
+            />
+        <com.wrapp.floatlabelededittext.FloatLabeledEditText
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            >
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:paddingBottom="16dp"
+                android:id="@+id/accountname"
+                android:hint="名称"/>
+        </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <net.steamcrafted.materialiconlib.MaterialIconView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="24dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:materialIcon="coin"
+            app:materialIconColor="#ADADAD"
+            app:materialIconSize="24dp"
+            android:scaleType="center"
+            android:id="@+id/moneyicon"
+            />
+        <com.wrapp.floatlabelededittext.FloatLabeledEditText
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            >
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:paddingBottom="16dp"
+                android:id="@+id/accountmoney"
+                android:hint="金额"/>
+        </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        >
+
+        <net.steamcrafted.materialiconlib.MaterialIconView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="24dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:materialIcon="check_all"
+            app:materialIconColor="#ADADAD"
+            app:materialIconSize="24dp"
+            android:scaleType="center"
+            android:id="@+id/typeicon"
+            />
+        <RadioGroup
+            android:id="@+id/type_radiogroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="bottom"
+            >
+            <RadioButton
+                android:shadowColor="@color/blue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/typeradioin"
+                android:text="收入"
+                android:textSize="40px"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/typeradioout"
+                android:text="支出"
+                android:textSize="40px"/>
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <net.steamcrafted.materialiconlib.MaterialIconView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="24dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:materialIcon="calendar_blank"
+            app:materialIconColor="#ADADAD"
+            app:materialIconSize="24dp"
+            android:scaleType="center"
+
+            android:id="@+id/timeicon"
+            />
+        <com.wrapp.floatlabelededittext.FloatLabeledEditText
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            >
+
+            <EditText
+                android:id="@+id/accounttime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:editable="false"
+                android:hint="时间"
+                android:paddingBottom="16dp"
+                android:textSize="16sp" />
+        </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <net.steamcrafted.materialiconlib.MaterialIconView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="24dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:materialIcon="calendar_blank"
+            app:materialIconColor="#ADADAD"
+            app:materialIconSize="24dp"
+            android:scaleType="center"
+
+            android:id="@+id/introduceicon"
+            />
+        <com.wrapp.floatlabelededittext.FloatLabeledEditText
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            >
+
+            <EditText
+                android:id="@+id/accountintroduce"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:editable="false"
+                android:hint="描述"
+                android:paddingBottom="16dp"
+                android:textSize="16sp" />
+        </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addaccount_btn"
+        android:text="添加"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        />
+
+
+
+
+
+</LinearLayout>
