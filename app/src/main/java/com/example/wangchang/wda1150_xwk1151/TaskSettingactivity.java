@@ -13,16 +13,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.menu.ActionMenuItemView;
 import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.method.KeyListener;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.example.wangchang.wda1150_xwk1151.Been.TaskBeen;
+import com.gc.materialdesign.views.CheckBox;
+import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -43,11 +49,13 @@ public class TaskSettingactivity extends AppCompatActivity {
     private EditText fre;
     private EditText description;
     private EditText remind_time;
-    private List<String> lists;
+    private MaterialSpinner materialSpinner;
+
     private ActionMenuItemView save;
     private long taskid;
     private TaskBeen tasknow;
     private Long id;
+    private CheckBox checkbox;
     private int mhour;
     private int mminute;
     @Override
@@ -63,10 +71,7 @@ public class TaskSettingactivity extends AppCompatActivity {
         toolbar.setTitle("任务详细设置");
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         toolbar.inflateMenu(R.menu.task_toolbar_menu);
-        lists = new ArrayList<String>();
-        lists.add("一次性");
-        lists.add("每天");
-        lists.add("每周");
+
         taskid = getIntent().getExtras().getLong("taskId");
         DaoMaster.DevOpenHelper devopenhelper = new DaoMaster.DevOpenHelper(getApplicationContext(),"task-db",null);
         DaoMaster daomaster = new DaoMaster(devopenhelper.getWritableDatabase());
@@ -76,7 +81,14 @@ public class TaskSettingactivity extends AppCompatActivity {
         startTxtview = (EditText)findViewById(R.id.starttime);
         remind_time = (EditText)findViewById(R.id.remind_time);
         titleView = (EditText)findViewById(R.id.tasktitle_set);
+        materialSpinner = (MaterialSpinner)findViewById(R.id.spinner);
+        materialSpinner.setItems("每天","每周");
+        materialSpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
 
+            }
+        });
         endTxtview = (EditText)findViewById(R.id.endtime);
         taskid = getIntent().getLongExtra("taskId",-1);
         if(taskid!=-1) {
@@ -124,9 +136,9 @@ public class TaskSettingactivity extends AppCompatActivity {
                      tasknow.setRemindTime(remind_time.getText().toString());
                     tasknow.setTitle(titleView.getText().toString());
                     tasknow.setStartTime(startTxtview.getText().toString());
-                    taskBeenDao.updateInTx(tasknow);
+                    taskBeenDao.update(tasknow);
                 }else{
-                    TaskBeen temp = taskBeenDao.queryBuilder().orderAsc(TaskBeenDao.Properties.Id).unique();
+                    TaskBeen temp = taskBeenDao.queryBuilder().orderDesc(TaskBeenDao.Properties.Id).limit(1).unique();
                     if(temp==null){
                         id = 1L;
                     }else{
@@ -136,7 +148,8 @@ public class TaskSettingactivity extends AppCompatActivity {
                     tasknow = new TaskBeen(id,date,startTxtview.getText().toString(),endTxtview.getText().toString(),description.getText().toString(),false,remind_time.getText().toString(),titleView.getText().toString());
                     taskBeenDao.insert(tasknow);
                 }
-                if(tasknow.getRemindTime()!=null){
+                checkbox = (CheckBox)findViewById(R.id.checkboxAlarm);
+                if(tasknow.getRemindTime()!=null&&checkbox.isCheck()){
                     Intent intentemp = new Intent(TaskSettingactivity.this,AlarmReceiver.class);
                     intentemp.setAction("com.example.wangchang.wda1150_xwk1151.alarmAction");
                     PendingIntent sender = PendingIntent.getBroadcast(TaskSettingactivity.this, 0, intentemp, 0);
@@ -185,4 +198,5 @@ public class TaskSettingactivity extends AppCompatActivity {
         }
 
     };
+
 }
