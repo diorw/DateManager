@@ -1,5 +1,6 @@
 package com.example.wangchang.wda1150_xwk1151.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,11 +12,15 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.example.wangchang.wda1150_xwk1151.AccountBeenDao;
+import com.example.wangchang.wda1150_xwk1151.AddAccount_forFloatingActivity;
 import com.example.wangchang.wda1150_xwk1151.Been.AccountBeen;
 import com.example.wangchang.wda1150_xwk1151.DaoMaster;
 import com.example.wangchang.wda1150_xwk1151.DaoSession;
+import com.example.wangchang.wda1150_xwk1151.MonthAccountActivity;
 import com.example.wangchang.wda1150_xwk1151.MonthAdapter;
 import com.example.wangchang.wda1150_xwk1151.R;
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +49,12 @@ public class GameFragment extends Fragment{
 
     private double allsum = 0.00;
 
+    private String month;
+
+    private FloatingActionsMenu menuMultipleActions;
+    private FloatingActionButton actionA;
+    private FloatingActionButton actionC;
+
 
     @Nullable
     @Override
@@ -61,43 +72,56 @@ public class GameFragment extends Fragment{
         DaoSession daoSession = daoMaster.newSession();
         AccountBeenDao accountBeenDao = daoSession.getAccountBeenDao();
 
-        //插入
-//        AccountBeen acc1 = new AccountBeen(1,"name",1,100.00,"10月","2017-7-5","1");
+//        accountBeenDao.deleteAll();
+//
+//        //插入
+//        AccountBeen acc1 = new AccountBeen(1,"name","收入",100.00,"10","2017-07-5","1");
 //        accountBeenDao.insert(acc1);
-
-//        AccountBeen acc2 = new AccountBeen(2,"name2",1,200.00,"10月","2017-7-5","1");
+//
+//        AccountBeen acc2 = new AccountBeen(2,"name2","收入",200.00,"10","2017-07-5","1");
 //        accountBeenDao.insert(acc2);
 //
-//        AccountBeen acc3 = new AccountBeen(3,"name3",2,100.00,"10月","2017-7-5","1");
+//        AccountBeen acc3 = new AccountBeen(3,"name3","支出",100.00,"10","2017-07-5","1");
 //        accountBeenDao.insert(acc3);
+//
+//        AccountBeen acc4 = new AccountBeen(4,"name3","支出",100.00,"09","2017-07-5","1");
+//        accountBeenDao.insert(acc4);
 
         //查询
-        accountBeens_in = accountBeenDao.queryBuilder().where(AccountBeenDao.Properties.Type.eq(1))
+        accountBeens_in = accountBeenDao.queryBuilder().where(AccountBeenDao.Properties.Type.eq("收入"))
                 .orderAsc(AccountBeenDao.Properties.Id)
-                .limit(5)
                 .build().list();
 
 
-        accountBeens_out = accountBeenDao.queryBuilder().where(AccountBeenDao.Properties.Type.eq(2))
+        accountBeens_out = accountBeenDao.queryBuilder().where(AccountBeenDao.Properties.Type.eq("支出"))
                 .orderAsc(AccountBeenDao.Properties.Id)
-                .limit(5)
                 .build().list();
 
 
         for(int i = 0;i<12;i++){
+            String month_every;
+            if (i<9)
+            {
+                month_every = ("0"+(i+1));
+            }
+            else
+            {
+                month_every = (""+(i+1));
+            }
+
             for (int j=0;j<accountBeens_in.size();j++){
-                if (accountBeens_in.get(j).getMonth().equals(i+1+"月")) {
+                if (accountBeens_in.get(j).getMonth().equals(month_every)) {
                     insum += accountBeens_in.get(j).getMoney();
                 }
             }
             for (int k=0;k<accountBeens_out.size();k++){
-                if (accountBeens_out.get(k).getMonth().equals(i+1+"月")){
+                if (accountBeens_out.get(k).getMonth().equals(month_every)){
                     outsum += accountBeens_out.get(k).getMoney();
                 }
             }
             allsum = insum - outsum;
             if (allsum<0){
-                mAllList.add("-"+allsum);
+                mAllList.add(""+allsum);
             }else {
                 mAllList.add("+"+allsum);
             }
@@ -124,6 +148,13 @@ public class GameFragment extends Fragment{
 
 
 
+        menuMultipleActions = (FloatingActionsMenu) view.findViewById(R.id.multiple_actions);
+
+
+        actionA = (FloatingActionButton) view.findViewById(R.id.action_a);
+
+
+
 
         return view;
 
@@ -138,6 +169,18 @@ public class GameFragment extends Fragment{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 System.out.println(position+1+"月");
+                if (position<9){
+                    month = ("0"+(position+1));
+                }else {
+                    month = (""+(position+1));
+                }
+                Intent intent = new Intent(getContext(), MonthAccountActivity.class);
+                intent.putExtra("month",month);
+                intent.putExtra("month_in",mInList.get(position));
+                intent.putExtra("month_out",mOutList.get(position));
+                intent.putExtra("month_all",mAllList.get(position));
+                startActivity(intent);
+
             }
         });
 
@@ -148,6 +191,16 @@ public class GameFragment extends Fragment{
             }
         });
 
+
+        actionA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                actionA.setTitle("Action A clicked");
+                Intent intent = new Intent(getContext(), AddAccount_forFloatingActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
 
 

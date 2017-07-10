@@ -20,6 +20,9 @@
 
         </activity>
         <activity android:name=".TaskSearchActivity"></activity>
+        <activity android:name=".MonthAccountActivity"></activity>
+        <activity android:name=".AddAccount_forFloatingActivity"></activity>
+        <activity android:name=".AddAccount_forMonthActivity"></activity>
     </application>
 
 </manifest>
