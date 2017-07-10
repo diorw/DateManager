@@ -149,7 +149,7 @@ public class TaskSettingactivity extends AppCompatActivity {
                     taskBeenDao.insert(tasknow);
                 }
                 checkbox = (CheckBox)findViewById(R.id.checkboxAlarm);
-                /*if(tasknow.getRemindTime()!=null&&checkbox.isCheck()){
+                if(tasknow.getRemindTime()!=null&&checkbox.isCheck()){
                     Intent intentemp = new Intent(TaskSettingactivity.this,AlarmReceiver.class);
                     intentemp.setAction("com.example.wangchang.wda1150_xwk1151.alarmAction");
                     PendingIntent sender = PendingIntent.getBroadcast(TaskSettingactivity.this, 0, intentemp, 0);
@@ -167,7 +167,7 @@ public class TaskSettingactivity extends AppCompatActivity {
                     firstTime += time;
                     AlarmManager manager = (AlarmManager)getSystemService(ALARM_SERVICE);
                     manager.set(AlarmManager.RTC_WAKEUP, time, sender);
-                }*/
+                }
                 Intent intent = new Intent(TaskSettingactivity.this, MainActivity.class);
 
                 startActivity(intent);
