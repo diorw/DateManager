@@ -34,11 +34,14 @@
             android:layout_height="wrap_content"
             >
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:textSize="16dp"
                 android:paddingBottom="16dp"
+                android:layout_marginRight="16dp"
                 android:id="@+id/tasktitle_set"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:hint="标题"/>
         </com.wrapp.floatlabelededittext.FloatLabeledEditText>
     </LinearLayout>
@@ -70,6 +73,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:editable="false"
+                android:maxLines="1"
                 android:paddingBottom="16dp"
                 android:id="@+id/starttime"
                 android:hint="开始时间"/>
@@ -97,6 +101,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:editable="false"
+                android:maxLines="1"
                 android:paddingBottom="16dp"
                 android:id="@+id/endtime"
                 android:hint="结束时间"/>
@@ -107,7 +112,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <com.gc.materialdesign.views.CheckBox
-            android:id="@+id/checkboxMan"
+            android:id="@+id/checkboxAlarm"
             android:layout_width="wrap_content"
             android:layout_marginTop="14dp"
             android:layout_height="wrap_content"
@@ -151,25 +156,22 @@
                 android:layout_height="wrap_content"
                 android:textSize="16dp"
                 android:editable="false"
+                android:maxLines="1"
                 android:paddingBottom="16dp"
                 android:id="@+id/remind_time"
                 android:hint="提醒时间"/>
         </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
-        <com.wrapp.floatlabelededittext.FloatLabeledEditText
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            >
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="16dp"
-                android:paddingBottom="16dp"
-                android:layout_marginLeft="10dp"
-                android:id="@+id/frequence"
-                android:hint="频率"/>
-        </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
     </LinearLayout>
+    <com.jaredrummler.materialspinner.MaterialSpinner
+        android:id="@+id/spinner"
+        android:elevation="2dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
