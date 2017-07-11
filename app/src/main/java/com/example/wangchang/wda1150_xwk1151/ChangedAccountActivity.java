@@ -1,6 +1,7 @@
 package com.example.wangchang.wda1150_xwk1151;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
@@ -17,9 +18,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-
+import android.widget.SpinnerAdapter;
 
 import com.example.wangchang.wda1150_xwk1151.Been.AccountBeen;
+import com.jaredrummler.materialspinner.MaterialSpinnerAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -31,21 +33,25 @@ import fr.ganfra.materialspinner.MaterialSpinner;
  * Created by dell-pc on 2017/7/10.
  */
 
-public class AddAccount_forFloatingActivity extends AppCompatActivity {
+public class ChangedAccountActivity extends AppCompatActivity {
 
     EditText timepicker;
     EditText moneyedt;
     EditText introedt;
     MaterialSpinner name_spinner;
     RadioGroup typegroup;
+    RadioButton in_radiobtn;
+    RadioButton out_radiobtn;
 
     String name;
     String type;
     String month;
     double money;
+    String enter_month;
+    long accountid;
 
     AccountBeen new_account;
-
+    AccountBeen load_accont;
     Button add;
 
     Long id;
@@ -59,12 +65,16 @@ public class AddAccount_forFloatingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addaccount);
 
+        enter_month = getIntent().getExtras().getString("month");
+        accountid = getIntent().getExtras().getLong("accountId");
+
         name_spinner = (MaterialSpinner) findViewById(R.id.name_spinner);
         timepicker = (EditText) findViewById(R.id.accounttime);
         moneyedt = (EditText) findViewById(R.id.accountmoney);
         introedt = (EditText) findViewById(R.id.accountintroduce);
 
         add = (Button) findViewById(R.id.addaccount_btn);
+        add.setText("修改");
 
 
         //初始化数据库
@@ -73,23 +83,21 @@ public class AddAccount_forFloatingActivity extends AppCompatActivity {
         DaoSession daoSession = daoMaster.newSession();
         final AccountBeenDao accountBeenDao = daoSession.getAccountBeenDao();
 
+        load_accont = accountBeenDao.load(accountid);
+
         setPricePoint(moneyedt);
-        moneyedt.setText("0.00");
+        moneyedt.setText(String.valueOf(load_accont.getMoney()));
+
+        introedt.setText(load_accont.getIntroduce());
 
 
         final Calendar c = Calendar.getInstance();
-
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-        String date=sdf.format(new Date());
-
-        SimpleDateFormat sdf2=new SimpleDateFormat("MM");
-        month=sdf2.format(new Date());
-
-        timepicker.setText(date);
+        month = load_accont.getMonth();
+        timepicker.setText(load_accont.getDate());
         timepicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerDialog dialog = new DatePickerDialog(AddAccount_forFloatingActivity.this,new DatePickerDialog.OnDateSetListener(){
+                DatePickerDialog dialog = new DatePickerDialog(ChangedAccountActivity.this,new DatePickerDialog.OnDateSetListener(){
 
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -105,6 +113,18 @@ public class AddAccount_forFloatingActivity extends AppCompatActivity {
 
 
         typegroup = (RadioGroup) findViewById(R.id.type_radiogroup);
+        in_radiobtn = (RadioButton) findViewById(R.id.typeradioin);
+        out_radiobtn = (RadioButton) findViewById(R.id.typeradioout);
+
+        if (in_radiobtn.getText().equals(load_accont.getType())){
+            typegroup.check(in_radiobtn.getId());
+            type = in_radiobtn.getText().toString();
+        }
+        else if (out_radiobtn.getText().equals(load_accont.getType())){
+            typegroup.check(out_radiobtn.getId());
+            type = out_radiobtn.getText().toString();
+        }
+
         typegroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
@@ -123,6 +143,8 @@ public class AddAccount_forFloatingActivity extends AppCompatActivity {
         name_spinner = (MaterialSpinner) findViewById(R.id.name_spinner);
         name_spinner.setAdapter(adapter);
         name_spinner.setPaddingSafe(0, 0, 0, 0);
+        setSpinnerItemSelectedByValue(name_spinner,load_accont.getName());
+
 
         name_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -139,14 +161,7 @@ public class AddAccount_forFloatingActivity extends AppCompatActivity {
         });
 
 
-        AccountBeen search = accountBeenDao.queryBuilder().orderDesc(AccountBeenDao.Properties.Id).limit(1).unique();
-        if (search != null){
-            id = search.getId()+1;
 
-        }else
-        {
-            id = 1L;
-        }
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,14 +183,37 @@ public class AddAccount_forFloatingActivity extends AppCompatActivity {
                 }
                 if (error == 1) {
 
-                    money = Float.parseFloat(moneyedt.getText().toString());
 
-                    new_account = new AccountBeen(id, name, type, money, month, timepicker.getText().toString(), introedt.getText().toString());
-                    accountBeenDao.insert(new_account);
+                    money = Float.parseFloat(moneyedt.getText().toString());
+                    Snackbar.make(v,id+"",Snackbar.LENGTH_LONG).show();
+
+                    AccountBeen updateData = new AccountBeen(load_accont.getId(),name,type,money,month,timepicker.getText().toString(),introedt.getText().toString());
+
+                    accountBeenDao.update(updateData);
+
+                    Intent intent = new Intent(ChangedAccountActivity.this,MonthAccountActivity.class);
+                    intent.putExtra("month",enter_month);
+                    startActivity(intent);
                 }
 
             }
+
+
         });
+
+
+    }
+
+    //给Spinner的默认值设置为账单的名称
+    public void setSpinnerItemSelectedByValue(MaterialSpinner spinner,String value){
+        SpinnerAdapter adapter = spinner.getAdapter();
+        int k = adapter.getCount();
+        for (int i=0;i<k;i++){
+            if (value.equals(adapter.getItem(i).toString())){
+                spinner.setSelection(i);
+            }
+        }
+
 
 
     }
