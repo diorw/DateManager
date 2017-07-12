@@ -163,22 +163,25 @@ public class TaskSettingactivity extends AppCompatActivity {
 
                     if (tasknow.getRemindTime() != null) {
                         Intent intentemp = new Intent(TaskSettingactivity.this, AlarmReceiver.class);
-                        intentemp.setAction("com.example.wangchang.wda1150_xwk1151.alarmAction");
+
                         PendingIntent sender = PendingIntent.getBroadcast(TaskSettingactivity.this, 0, intentemp, 0);
-                        long firstTime = SystemClock.elapsedRealtime();
-                        long systemTime = System.currentTimeMillis();
+
                         Calendar calendar = Calendar.getInstance();
+
+
                         calendar.setTimeInMillis(System.currentTimeMillis());
-                        calendar.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+                        Log.d("年", "onClick: "+calendar.get(Calendar.YEAR));
+                        Log.d("月","onClick: "+calendar.get(Calendar.MONTH));
                         calendar.set(Calendar.MINUTE, mminute);
                         calendar.set(Calendar.HOUR_OF_DAY, mhour);
+                        Log.d("小时", "onClick: "+calendar.get(Calendar.HOUR_OF_DAY));
+                        Log.d("分钟", "onClick: "+calendar.get(Calendar.MINUTE));
                         calendar.set(Calendar.SECOND, 0);
                         calendar.set(Calendar.MILLISECOND, 0);
-                        long selectTime = calendar.getTimeInMillis();
-                        long time = selectTime - systemTime;
-                        firstTime += time;
+                        Log.d("分钟", "onClick: "+calendar.getTimeInMillis());
                         AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
-                        manager.set(AlarmManager.RTC_WAKEUP, time, sender);
+                        manager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),sender);
+                        Toast.makeText(getApplicationContext(),"设置闹钟时间为"+mhour+":"+mminute,Toast.LENGTH_LONG).show();
                     }
                     Intent intent = new Intent(TaskSettingactivity.this, MainActivity.class);
 
