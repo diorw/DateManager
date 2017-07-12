@@ -25,6 +25,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.wangchang.wda1150_xwk1151.Been.TaskBeen;
 import com.gc.materialdesign.views.CheckBox;
@@ -50,7 +51,8 @@ public class TaskSettingactivity extends AppCompatActivity {
     private EditText description;
     private EditText remind_time;
     private MaterialSpinner materialSpinner;
-
+    private int start = 0;
+    private int end = 0;
     private ActionMenuItemView save;
     private long taskid;
     private TaskBeen tasknow;
@@ -97,6 +99,7 @@ public class TaskSettingactivity extends AppCompatActivity {
             endTxtview.setText(tasknow.getEndTime());
             titleView.setText(tasknow.getTitle());
             description.setText(tasknow.getDescription());
+            remind_time.setText(tasknow.getRemindTime());
         }
 
 
@@ -127,50 +130,60 @@ public class TaskSettingactivity extends AppCompatActivity {
 
 
         save = (ActionMenuItemView)findViewById(R.id.ok);
-
+        checkbox = (CheckBox)findViewById(R.id.checkboxAlarm);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(taskid!=-1) {
-                    tasknow.setEndTime(endTxtview.getText().toString());
-                     tasknow.setRemindTime(remind_time.getText().toString());
-                    tasknow.setTitle(titleView.getText().toString());
-                    tasknow.setStartTime(startTxtview.getText().toString());
-                    taskBeenDao.update(tasknow);
-                }else{
-                    TaskBeen temp = taskBeenDao.queryBuilder().orderDesc(TaskBeenDao.Properties.Id).limit(1).unique();
-                    if(temp==null){
-                        id = 1L;
-                    }else{
-                        id = temp.getId()+1;
+                if(start>end){
+                    Toast.makeText(getApplicationContext(),"开始时间不能比结束时间迟",Toast.LENGTH_LONG).show();
+                }else {
+                    if (taskid != -1) {
+                        tasknow.setEndTime(endTxtview.getText().toString());
+                        tasknow.setRemindTime(remind_time.getText().toString());
+                        tasknow.setTitle(titleView.getText().toString());
+                        tasknow.setStartTime(startTxtview.getText().toString());
+                        tasknow.setDescription(description.getText().toString());
+                        tasknow.setIsCompleted(checkbox.isCheck());
+                        if (checkbox.isCheck()) {
+                            tasknow.setIsCompleted(true);
+                        }
+                        taskBeenDao.update(tasknow);
+                    } else {
+                        TaskBeen temp = taskBeenDao.queryBuilder().orderDesc(TaskBeenDao.Properties.Id).limit(1).unique();
+                        if (temp == null) {
+                            id = 1L;
+                        } else {
+                            id = temp.getId() + 1;
+                        }
+                        String date = getIntent().getStringExtra("date");
+                        tasknow = new TaskBeen(id, date, startTxtview.getText().toString(), endTxtview.getText().toString(), description.getText().toString(), checkbox.isCheck(), remind_time.getText().toString(), titleView.getText().toString());
+                        taskBeenDao.insert(tasknow);
                     }
-                    String date = getIntent().getStringExtra("date");
-                    tasknow = new TaskBeen(id,date,startTxtview.getText().toString(),endTxtview.getText().toString(),description.getText().toString(),false,remind_time.getText().toString(),titleView.getText().toString());
-                    taskBeenDao.insert(tasknow);
-                }
-                checkbox = (CheckBox)findViewById(R.id.checkboxAlarm);
-                if(tasknow.getRemindTime()!=null&&checkbox.isCheck()){
-                    Intent intentemp = new Intent(TaskSettingactivity.this,AlarmReceiver.class);
-                    intentemp.setAction("com.example.wangchang.wda1150_xwk1151.alarmAction");
-                    PendingIntent sender = PendingIntent.getBroadcast(TaskSettingactivity.this, 0, intentemp, 0);
-                    long firstTime = SystemClock.elapsedRealtime();
-                    long systemTime = System.currentTimeMillis();
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.setTimeInMillis(System.currentTimeMillis());
-                    calendar.setTimeZone(TimeZone.getTimeZone("GMT+8"));
-                    calendar.set(Calendar.MINUTE, mminute);
-                    calendar.set(Calendar.HOUR_OF_DAY, mhour);
-                    calendar.set(Calendar.SECOND, 0);
-                    calendar.set(Calendar.MILLISECOND, 0);
-                    long selectTime = calendar.getTimeInMillis();
-                    long time = selectTime - systemTime;
-                    firstTime += time;
-                    AlarmManager manager = (AlarmManager)getSystemService(ALARM_SERVICE);
-                    manager.set(AlarmManager.RTC_WAKEUP, time, sender);
-                }
-                Intent intent = new Intent(TaskSettingactivity.this, MainActivity.class);
 
-                startActivity(intent);
+
+                    if (tasknow.getRemindTime() != null) {
+                        Intent intentemp = new Intent(TaskSettingactivity.this, AlarmReceiver.class);
+                        intentemp.setAction("com.example.wangchang.wda1150_xwk1151.alarmAction");
+                        PendingIntent sender = PendingIntent.getBroadcast(TaskSettingactivity.this, 0, intentemp, 0);
+                        long firstTime = SystemClock.elapsedRealtime();
+                        long systemTime = System.currentTimeMillis();
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTimeInMillis(System.currentTimeMillis());
+                        calendar.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+                        calendar.set(Calendar.MINUTE, mminute);
+                        calendar.set(Calendar.HOUR_OF_DAY, mhour);
+                        calendar.set(Calendar.SECOND, 0);
+                        calendar.set(Calendar.MILLISECOND, 0);
+                        long selectTime = calendar.getTimeInMillis();
+                        long time = selectTime - systemTime;
+                        firstTime += time;
+                        AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                        manager.set(AlarmManager.RTC_WAKEUP, time, sender);
+                    }
+                    Intent intent = new Intent(TaskSettingactivity.this, MainActivity.class);
+
+                    startActivity(intent);
+                }
             }
         });
 
@@ -179,6 +192,7 @@ public class TaskSettingactivity extends AppCompatActivity {
         @Override
         public void onTimeSet(TimePicker timePicker, int i, int i1) {
             startTxtview.setText(i+":"+i1);
+            start = i*1000+i1;
         }
 
     };
@@ -186,6 +200,7 @@ public class TaskSettingactivity extends AppCompatActivity {
         @Override
         public void onTimeSet(TimePicker timePicker, int i, int i1) {
             endTxtview.setText(i+":"+i1);
+            end = i*1000+i1;
         }
 
     };

@@ -77,31 +77,20 @@ public class MusicFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-    //   taskBeenDao.deleteAll();
+
         datetemp= new Date();
         SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd");
         String now =dateformate.format(datetemp);
-        Log.d("nowtime", "onActivityCreated: "+now);
-      /*  TaskBeen newTask = new TaskBeen(1,now,null,null,null,false,null,"约饭2");
-        taskBeenDao.insert(newTask);*/
-
         alltasks = taskBeenDao.loadAll();
-     //   Log.d("tasklenth", "onActivityCreated: "+alltasks.size());
         for(int i = 0;i<alltasks.size();i++){
             String nowday = alltasks.get(i).getDate();
-
             String[] data= nowday.split("-");
-
             CalendarDay temp = (CalendarDay.from(Integer.valueOf(data[0]),Integer.valueOf(data[1])-1,Integer.valueOf(data[2])));
-            Log.d("day", "onActivityCreated: "+data[0]);
-            Log.d("day", "onActivityCreated: "+data[1]);
-            Log.d("day", "onActivityCreated: "+data[2]);
             if(!hashset.contains(temp)){
                 hashset.add(temp);
             }
 
         }
-      //  Log.d("hashset", "onActivityCreated: "+hashset.size());
         recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         tasks = taskBeenDao.queryBuilder().where(TaskBeenDao.Properties.Date.eq(now)).build().list();
         taskAdapter = new TaskAdapter(tasks);
@@ -166,15 +155,11 @@ public class MusicFragment extends Fragment {
                 //定义可以拖拽或滑动的方向 可以左右滑动
                 return makeMovementFlags(dragFlags, swipeFlags);
             }
-
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-
                 Collections.swap(tasks, viewHolder.getAdapterPosition(), target
                             .getAdapterPosition());
-
                 return true;
-
             }
             @Override
             public void onMoved(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, int
