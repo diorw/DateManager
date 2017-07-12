@@ -17,6 +17,7 @@ import com.example.wangchang.wda1150_xwk1151.Been.AccountBeen;
 import com.example.wangchang.wda1150_xwk1151.DaoMaster;
 import com.example.wangchang.wda1150_xwk1151.DaoSession;
 import com.example.wangchang.wda1150_xwk1151.LoginActivity;
+import com.example.wangchang.wda1150_xwk1151.MainActivity;
 import com.example.wangchang.wda1150_xwk1151.MonthAccountActivity;
 import com.example.wangchang.wda1150_xwk1151.MonthAdapter;
 import com.example.wangchang.wda1150_xwk1151.R;
@@ -30,7 +31,7 @@ import java.util.List;
 /**
  * Created by WangChang on 2016/5/15.
  */
-public class GameFragment extends Fragment{
+public class AccountFragment extends Fragment{
 
     private ArrayList<String> mMonthList;
     private ArrayList<String> mInList;
@@ -210,7 +211,7 @@ public class GameFragment extends Fragment{
             public void onClick(View view) {
 //                actionA.setTitle("Action A clicked");
                 Intent intent = new Intent(getContext(), AddAccount_forFloatingActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,1);
 
             }
         });
@@ -300,11 +301,20 @@ public class GameFragment extends Fragment{
 
     }
 
-    public static GameFragment newInstance(String content) {
+    public static AccountFragment newInstance(String content) {
         Bundle args = new Bundle();
 
-        GameFragment fragment = new GameFragment();
+        AccountFragment fragment = new AccountFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if ((requestCode == 1) && (resultCode == 2)){
+            MainActivity mainActivity = (MainActivity) getActivity();
+            mainActivity.gotoAccountFragment();
+        }
     }
 }

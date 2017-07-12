@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme">
 
 
-     
+
         <receiver android:name=".AlarmReceiver" android:process=":remote" />
         <activity android:name="com.example.wangchang.wda1150_xwk1151.MainActivity">
 

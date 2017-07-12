@@ -10,9 +10,9 @@ import android.os.Bundle;
 import com.ashokvarma.bottomnavigation.BadgeItem;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
-import com.example.wangchang.wda1150_xwk1151.fragment.GameFragment;
+import com.example.wangchang.wda1150_xwk1151.fragment.AccountFragment;
 import com.example.wangchang.wda1150_xwk1151.fragment.HomeFragment;
-import com.example.wangchang.wda1150_xwk1151.fragment.MusicFragment;
+import com.example.wangchang.wda1150_xwk1151.fragment.TaskFragment;
 
 import java.util.ArrayList;
 
@@ -57,11 +57,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
     private ArrayList<Fragment> getFragments() {
         ArrayList<Fragment> fragments = new ArrayList<>();
-        fragments.add(MusicFragment.newInstance("Home"));
+        fragments.add(TaskFragment.newInstance("Home"));
 
         fragments.add(HomeFragment.newInstance("Music"));
 
-        fragments.add(GameFragment.newInstance("Games"));
+        fragments.add(AccountFragment.newInstance("Games"));
         return fragments;
     }
 
@@ -99,5 +99,22 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     @Override
     public void onTabReselected(int position) {
 
+    }
+    private FragmentManager fmanager;
+    private FragmentTransaction ftransaction;
+    public void gotoAccountFragment() {
+        fmanager = getSupportFragmentManager();
+        ftransaction = fmanager.beginTransaction();
+        AccountFragment mAccountFragment = new AccountFragment();
+        ftransaction.replace(R.id.layFrame, mAccountFragment);
+        ftransaction.commit();
+    }
+
+    public void gotoTaskFragment() {
+        fmanager = getSupportFragmentManager();
+        ftransaction = fmanager.beginTransaction();
+        TaskFragment mTaskFragment = new TaskFragment();
+        ftransaction.replace(R.id.layFrame,mTaskFragment);
+        ftransaction.commit();
     }
 }

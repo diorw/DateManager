@@ -1,26 +1,18 @@
 package com.example.wangchang.wda1150_xwk1151;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.example.wangchang.wda1150_xwk1151.Been.TaskBeen;
-import com.example.wangchang.wda1150_xwk1151.fragment.MusicFragment;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
 import java.util.ArrayList;
 import java.util.List;

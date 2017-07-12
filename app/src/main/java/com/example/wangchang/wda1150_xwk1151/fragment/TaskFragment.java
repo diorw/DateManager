@@ -6,8 +6,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.example.wangchang.wda1150_xwk1151.MainActivity;
 import com.example.wangchang.wda1150_xwk1151.TaskSearchActivity;
-import com.gc.materialdesign.views.ButtonFloatSmall;
+
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,7 +19,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,7 +44,7 @@ import java.util.List;
 /**
  * Created by WangChang on 2016/5/15.
  */
-public class MusicFragment extends Fragment {
+public class TaskFragment extends Fragment {
     private static final DateFormat FORMATTER = SimpleDateFormat.getDateInstance();
     private TextView textView;
     private RecyclerView recyclerView;
@@ -114,7 +114,7 @@ public class MusicFragment extends Fragment {
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(getContext(), TaskSettingactivity.class);
                 intent.putExtra("taskId",tasks.get(position).getId());
-                startActivity(intent);
+                startActivityForResult(intent,1);
             }
         });
         addtask.setOnClickListener(new View.OnClickListener() {
@@ -182,10 +182,10 @@ public class MusicFragment extends Fragment {
         }).attachToRecyclerView(recyclerView);
     }
 
-    public static MusicFragment newInstance(String content) {
+    public static TaskFragment newInstance(String content) {
         Bundle args = new Bundle();
         args.putString("ARGS", content);
-        MusicFragment fragment = new MusicFragment();
+        TaskFragment fragment = new TaskFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -227,5 +227,16 @@ public class MusicFragment extends Fragment {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if ((requestCode == 1) && (resultCode == 3)){
+            MainActivity mainActivity = (MainActivity) getActivity();
+            mainActivity.gotoTaskFragment();
+        }
+
+
     }
 }

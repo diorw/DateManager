@@ -172,6 +172,10 @@ public class AddAccount_forFloatingActivity extends AppCompatActivity {
 
                     new_account = new AccountBeen(id, name, type, money, month, timepicker.getText().toString(), introedt.getText().toString());
                     accountBeenDao.insert(new_account);
+
+                    setResult(2);
+                    finish();
+
                 }
 
             }

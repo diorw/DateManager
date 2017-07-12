@@ -183,9 +183,9 @@ public class TaskSettingactivity extends AppCompatActivity {
                         manager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),sender);
                         Toast.makeText(getApplicationContext(),"设置闹钟时间为"+mhour+":"+mminute,Toast.LENGTH_LONG).show();
                     }
-                    Intent intent = new Intent(TaskSettingactivity.this, MainActivity.class);
+                    setResult(3);
+                    finish();
 
-                    startActivity(intent);
                 }
             }
         });
