@@ -3,11 +3,13 @@ package com.example.wangchang.wda1150_xwk1151;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.menu.ActionMenuItemView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -18,6 +20,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.wangchang.wda1150_xwk1151.Been.AccountBeen;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import static com.example.wangchang.wda1150_xwk1151.R.color.colorAccent;
@@ -44,11 +47,11 @@ public class MonthAccountActivity extends AppCompatActivity {
     private List<AccountBeen> accountBeens_out;
     private List<AccountBeen> accountBeens;
 
-    private double insum = 0.00;
+    private Float insum = 0.00f;
 
-    private double outsum = 0.00;
+    private Float outsum = 0.00f;
 
-    private double allsum = 0.00;
+    private Float allsum = 0.00f;
 
     private ImageView in_btn;
     private ImageView out_btn;
@@ -78,8 +81,18 @@ public class MonthAccountActivity extends AppCompatActivity {
         toolbar.setTitle(month+"月收支项目");
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         toolbar.inflateMenu(R.menu.monthaccount_toolbar_menu);
+//        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.mipmap.ic_home_white_24dp);
 
         add = (ActionMenuItemView) findViewById(R.id.add_account);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(2);
+                finish();
+            }
+        });
 
 
         //初始化数据库
@@ -98,6 +111,7 @@ public class MonthAccountActivity extends AppCompatActivity {
                 .orderAsc(AccountBeenDao.Properties.Id)
                 .build().list();
 
+        DecimalFormat decimalFormat=new DecimalFormat("##0.00");
         for (int j=0;j<accountBeens_in.size();j++){
             insum += accountBeens_in.get(j).getMoney();
 
@@ -109,12 +123,14 @@ public class MonthAccountActivity extends AppCompatActivity {
         }
         allsum = insum - outsum;
         if (allsum<0){
-            month_all = (""+allsum);
+
+            month_all = (""+decimalFormat.format(allsum));
         }else {
-            month_all = ("+"+allsum);
+            month_all = ("+"+decimalFormat.format(allsum));
         }
-        month_in = ("+"+insum);
-        month_out = ("-"+outsum);
+
+        month_in = ("+"+decimalFormat.format(insum));
+        month_out = ("-"+decimalFormat.format(outsum));
 
         tv_month_in = (TextView) findViewById(R.id.month_in);
         tv_month_in.setText(month_in);

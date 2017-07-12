@@ -46,7 +46,7 @@ public class ChangedAccountActivity extends AppCompatActivity {
     String name;
     String type;
     String month;
-    double money;
+    Float money;
     String enter_month;
     long accountid;
 

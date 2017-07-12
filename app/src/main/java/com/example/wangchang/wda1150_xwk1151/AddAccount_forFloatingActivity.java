@@ -42,7 +42,7 @@ public class AddAccount_forFloatingActivity extends AppCompatActivity {
     String name;
     String type;
     String month;
-    double money;
+    Float money;
 
     AccountBeen new_account;
 

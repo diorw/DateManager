@@ -17,12 +17,12 @@ public class AccountBeen {
     private String name;
     //显示收入还是支出
     private String type;
-    private double money;
+    private Float money;
     private String month;
     private String date;
     private String introduce;
-    @Generated(hash = 1005976583)
-    public AccountBeen(long id, @NotNull String name, String type, double money,
+    @Generated(hash = 2095425094)
+    public AccountBeen(long id, @NotNull String name, String type, Float money,
             String month, String date, String introduce) {
         this.id = id;
         this.name = name;
@@ -53,10 +53,10 @@ public class AccountBeen {
     public void setType(String type) {
         this.type = type;
     }
-    public double getMoney() {
+    public Float getMoney() {
         return this.money;
     }
-    public void setMoney(double money) {
+    public void setMoney(Float money) {
         this.money = money;
     }
     public String getMonth() {
@@ -77,7 +77,7 @@ public class AccountBeen {
     public void setIntroduce(String introduce) {
         this.introduce = introduce;
     }
-   
+
 
 
     

@@ -42,7 +42,7 @@ public class AddAccount_forMonthActivity extends AppCompatActivity {
     String name;
     String type;
     String month;
-    double money;
+    Float money;
     String enter_month;
 
     AccountBeen new_account;

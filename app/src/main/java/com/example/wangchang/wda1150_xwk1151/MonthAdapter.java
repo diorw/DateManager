@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -73,7 +75,9 @@ public class MonthAdapter extends BaseAdapter {
             viewTag = (ItemViewTag) convertView.getTag();
 
         }
-
+        BigDecimal b   =   new   BigDecimal(mInList.get(position));
+//        DecimalFormat decimalFormat=new DecimalFormat(".00");
+        Float in =  b.setScale(2,BigDecimal.ROUND_HALF_UP).floatValue();
 
         viewTag.mMonth.setText(mMonthList.get(position));
         viewTag.mInsum.setText(mInList.get(position));

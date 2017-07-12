@@ -27,7 +27,7 @@ public class AccountBeenDao extends AbstractDao<AccountBeen, Long> {
         public final static Property Id = new Property(0, long.class, "id", true, "_id");
         public final static Property Name = new Property(1, String.class, "name", false, "NAME");
         public final static Property Type = new Property(2, String.class, "type", false, "TYPE");
-        public final static Property Money = new Property(3, double.class, "money", false, "MONEY");
+        public final static Property Money = new Property(3, Float.class, "money", false, "MONEY");
         public final static Property Month = new Property(4, String.class, "month", false, "MONTH");
         public final static Property Date = new Property(5, String.class, "date", false, "DATE");
         public final static Property Introduce = new Property(6, String.class, "introduce", false, "INTRODUCE");
@@ -49,7 +49,7 @@ public class AccountBeenDao extends AbstractDao<AccountBeen, Long> {
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ," + // 0: id
                 "\"NAME\" TEXT NOT NULL ," + // 1: name
                 "\"TYPE\" TEXT," + // 2: type
-                "\"MONEY\" REAL NOT NULL ," + // 3: money
+                "\"MONEY\" REAL," + // 3: money
                 "\"MONTH\" TEXT," + // 4: month
                 "\"DATE\" TEXT," + // 5: date
                 "\"INTRODUCE\" TEXT);"); // 6: introduce
@@ -71,7 +71,11 @@ public class AccountBeenDao extends AbstractDao<AccountBeen, Long> {
         if (type != null) {
             stmt.bindString(3, type);
         }
-        stmt.bindDouble(4, entity.getMoney());
+ 
+        Float money = entity.getMoney();
+        if (money != null) {
+            stmt.bindDouble(4, money);
+        }
  
         String month = entity.getMonth();
         if (month != null) {
@@ -99,7 +103,11 @@ public class AccountBeenDao extends AbstractDao<AccountBeen, Long> {
         if (type != null) {
             stmt.bindString(3, type);
         }
-        stmt.bindDouble(4, entity.getMoney());
+ 
+        Float money = entity.getMoney();
+        if (money != null) {
+            stmt.bindDouble(4, money);
+        }
  
         String month = entity.getMonth();
         if (month != null) {
@@ -128,7 +136,7 @@ public class AccountBeenDao extends AbstractDao<AccountBeen, Long> {
             cursor.getLong(offset + 0), // id
             cursor.getString(offset + 1), // name
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // type
-            cursor.getDouble(offset + 3), // money
+            cursor.isNull(offset + 3) ? null : cursor.getFloat(offset + 3), // money
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // month
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // date
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6) // introduce
@@ -141,7 +149,7 @@ public class AccountBeenDao extends AbstractDao<AccountBeen, Long> {
         entity.setId(cursor.getLong(offset + 0));
         entity.setName(cursor.getString(offset + 1));
         entity.setType(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setMoney(cursor.getDouble(offset + 3));
+        entity.setMoney(cursor.isNull(offset + 3) ? null : cursor.getFloat(offset + 3));
         entity.setMonth(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
         entity.setDate(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
         entity.setIntroduce(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));

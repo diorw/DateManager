@@ -16,12 +16,14 @@ import com.example.wangchang.wda1150_xwk1151.AddAccount_forFloatingActivity;
 import com.example.wangchang.wda1150_xwk1151.Been.AccountBeen;
 import com.example.wangchang.wda1150_xwk1151.DaoMaster;
 import com.example.wangchang.wda1150_xwk1151.DaoSession;
+import com.example.wangchang.wda1150_xwk1151.LoginActivity;
 import com.example.wangchang.wda1150_xwk1151.MonthAccountActivity;
 import com.example.wangchang.wda1150_xwk1151.MonthAdapter;
 import com.example.wangchang.wda1150_xwk1151.R;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,17 +45,21 @@ public class GameFragment extends Fragment{
 
     private List<AccountBeen> accountBeens_out;
 
-    private double insum = 0.00;
+    private Float insum = 0.00f ;
 
-    private double outsum = 0.00;
+    private Float outsum =0.00f ;
 
-    private double allsum = 0.00;
+    private Float allsum =0.00f ;
+
+    private Float in = 0.00f;
+    private Float out  = 0.00f;
+    private Float all = 0.00f;
 
     private String month;
 
     private FloatingActionsMenu menuMultipleActions;
     private FloatingActionButton actionA;
-
+    AccountBeenDao accountBeenDao;
 
 
     @Nullable
@@ -64,13 +70,14 @@ public class GameFragment extends Fragment{
         mInList = new ArrayList<String>();
         mOutList = new ArrayList<String>();
         mAllList = new ArrayList<String>();
+        DecimalFormat df = new DecimalFormat("#.00");
 
 
         //初始化数据库
-        DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(getContext(),"account-db",null);
-        DaoMaster daoMaster = new DaoMaster(devOpenHelper.getWritableDatabase());
-        DaoSession daoSession = daoMaster.newSession();
-        AccountBeenDao accountBeenDao = daoSession.getAccountBeenDao();
+//        DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(getContext(),"account-db",null);
+//        DaoMaster daoMaster = new DaoMaster(devOpenHelper.getWritableDatabase());
+//        DaoSession daoSession = daoMaster.newSession();
+//        accountBeenDao = daoSession.getAccountBeenDao();
 
 //        accountBeenDao.deleteAll();
 //
@@ -88,76 +95,82 @@ public class GameFragment extends Fragment{
 //        accountBeenDao.insert(acc4);
 
         //查询
-        accountBeens_in = accountBeenDao.queryBuilder().where(AccountBeenDao.Properties.Type.eq("收入"))
-                .orderAsc(AccountBeenDao.Properties.Id)
-                .build().list();
+//        accountBeens_in = accountBeenDao.queryBuilder().where(AccountBeenDao.Properties.Type.eq("收入"))
+//                .orderAsc(AccountBeenDao.Properties.Id)
+//                .build().list();
+//
+//
+//        accountBeens_out = accountBeenDao.queryBuilder().where(AccountBeenDao.Properties.Type.eq("支出"))
+//                .orderAsc(AccountBeenDao.Properties.Id)
+//                .build().list();
+//
+//
+//        for(int i = 0;i<12;i++){
+//            String month_every;
+//            if (i<9)
+//            {
+//                month_every = ("0"+(i+1));
+//            }
+//            else
+//            {
+//                month_every = (""+(i+1));
+//            }
+//            DecimalFormat   fnum   =   new   DecimalFormat("##0.00");
+//            for (int j=0;j<accountBeens_in.size();j++){
+//                if (accountBeens_in.get(j).getMonth().equals(month_every)) {
+//                    insum += accountBeens_in.get(j).getMoney();
+//
+//                }
+//            }
+//            for (int k=0;k<accountBeens_out.size();k++){
+//                if (accountBeens_out.get(k).getMonth().equals(month_every)){
+//                    outsum += accountBeens_out.get(k).getMoney();
+//                }
+//            }
+//            allsum = insum - outsum;
+//            String all = fnum.format(allsum);
+//            String in = fnum.format(insum);
+//            String out = fnum.format(outsum);
+//            if (allsum<0){
+//
+//                mAllList.add(""+all);
+//            }else {
+//                mAllList.add("+"+all);
+//            }
+//            mMonthList.add(i+1+"月");
+//            mInList.add("+"+in);
+//            mOutList.add("-"+out);
+//
+//            insum = 0.00f;
+//            outsum = 0.00f;
+//            allsum = 0.00f;
+//        }
+//
+//
+//        gridView = (GridView) view.findViewById(R.id.select_month);
+//
+//
+//
+//
+//        gridView.setAdapter(new MonthAdapter(getActivity(), mMonthList, mInList, mOutList, mAllList));
+//
+//
+//
+//        add = view.findViewById(R.id.addbtn);
+//
+//
+//
+//        menuMultipleActions = (FloatingActionsMenu) view.findViewById(R.id.multiple_actions);
+//
+//
+//        actionA = (FloatingActionButton) view.findViewById(R.id.action_a);
+//
+//
+//
+//        return view;
 
-
-        accountBeens_out = accountBeenDao.queryBuilder().where(AccountBeenDao.Properties.Type.eq("支出"))
-                .orderAsc(AccountBeenDao.Properties.Id)
-                .build().list();
-
-
-        for(int i = 0;i<12;i++){
-            String month_every;
-            if (i<9)
-            {
-                month_every = ("0"+(i+1));
-            }
-            else
-            {
-                month_every = (""+(i+1));
-            }
-
-            for (int j=0;j<accountBeens_in.size();j++){
-                if (accountBeens_in.get(j).getMonth().equals(month_every)) {
-                    insum += accountBeens_in.get(j).getMoney();
-                }
-            }
-            for (int k=0;k<accountBeens_out.size();k++){
-                if (accountBeens_out.get(k).getMonth().equals(month_every)){
-                    outsum += accountBeens_out.get(k).getMoney();
-                }
-            }
-            allsum = insum - outsum;
-            if (allsum<0){
-                mAllList.add(""+allsum);
-            }else {
-                mAllList.add("+"+allsum);
-            }
-            mMonthList.add(i+1+"月");
-            mInList.add("+"+insum);
-            mOutList.add("-"+outsum);
-
-            insum = 0.00;
-            outsum = 0.00;
-            allsum = 0.00;
-        }
-
-
-        gridView = (GridView) view.findViewById(R.id.select_month);
-
-
-
-
-        gridView.setAdapter(new MonthAdapter(getActivity(), mMonthList, mInList, mOutList, mAllList));
-
-
-
-        add = view.findViewById(R.id.addbtn);
-
-
-
-        menuMultipleActions = (FloatingActionsMenu) view.findViewById(R.id.multiple_actions);
-
-
-        actionA = (FloatingActionButton) view.findViewById(R.id.action_a);
-
-
-
+        initData(view);
         return view;
-
-
     }
 
     @Override
@@ -178,7 +191,7 @@ public class GameFragment extends Fragment{
                 intent.putExtra("month_in",mInList.get(position));
                 intent.putExtra("month_out",mOutList.get(position));
                 intent.putExtra("month_all",mAllList.get(position));
-                startActivity(intent);
+                startActivityForResult(intent,1);
 
             }
         });
@@ -186,7 +199,8 @@ public class GameFragment extends Fragment{
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -204,6 +218,85 @@ public class GameFragment extends Fragment{
 
 
 
+
+    }
+    public void initData(View view){
+
+        DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(getContext(),"account-db",null);
+        DaoMaster daoMaster = new DaoMaster(devOpenHelper.getWritableDatabase());
+        DaoSession daoSession = daoMaster.newSession();
+        accountBeenDao = daoSession.getAccountBeenDao();
+
+
+        accountBeens_in = accountBeenDao.queryBuilder().where(AccountBeenDao.Properties.Type.eq("收入"))
+                .orderAsc(AccountBeenDao.Properties.Id)
+                .build().list();
+
+
+        accountBeens_out = accountBeenDao.queryBuilder().where(AccountBeenDao.Properties.Type.eq("支出"))
+                .orderAsc(AccountBeenDao.Properties.Id)
+                .build().list();
+
+
+        for(int i = 0;i<12;i++){
+            String month_every;
+            if (i<9)
+            {
+                month_every = ("0"+(i+1));
+            }
+            else
+            {
+                month_every = (""+(i+1));
+            }
+            DecimalFormat   fnum   =   new   DecimalFormat("##0.00");
+            for (int j=0;j<accountBeens_in.size();j++){
+                if (accountBeens_in.get(j).getMonth().equals(month_every)) {
+                    insum += accountBeens_in.get(j).getMoney();
+
+                }
+            }
+            for (int k=0;k<accountBeens_out.size();k++){
+                if (accountBeens_out.get(k).getMonth().equals(month_every)){
+                    outsum += accountBeens_out.get(k).getMoney();
+                }
+            }
+            allsum = insum - outsum;
+            String all = fnum.format(allsum);
+            String in = fnum.format(insum);
+            String out = fnum.format(outsum);
+            if (allsum<0){
+
+                mAllList.add(""+all);
+            }else {
+                mAllList.add("+"+all);
+            }
+            mMonthList.add(i+1+"月");
+            mInList.add("+"+in);
+            mOutList.add("-"+out);
+
+            insum = 0.00f;
+            outsum = 0.00f;
+            allsum = 0.00f;
+        }
+
+
+        gridView = (GridView) view.findViewById(R.id.select_month);
+
+
+
+
+        gridView.setAdapter(new MonthAdapter(getActivity(), mMonthList, mInList, mOutList, mAllList));
+
+
+
+        add = view.findViewById(R.id.addbtn);
+
+
+
+        menuMultipleActions = (FloatingActionsMenu) view.findViewById(R.id.multiple_actions);
+
+
+        actionA = (FloatingActionButton) view.findViewById(R.id.action_a);
 
     }
 
