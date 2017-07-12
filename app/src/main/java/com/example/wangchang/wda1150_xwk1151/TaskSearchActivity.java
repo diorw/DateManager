@@ -68,21 +68,16 @@ public class TaskSearchActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 alltasks = taskBeenDao.queryBuilder().where(TaskBeenDao.Properties.Title.like("%"+query+"%")).build().list();
-                Log.d("search", "tempalltask.size "+tempalltasks.size());
-                Log.d("search", "alltask.size: "+alltasks.size());
                 taskAdapter.notifyDataSetChanged();
                 recyclerView.scrollToPosition(0);
                 return true;
             }
-
             @Override
             public boolean onQueryTextChange(String newText) {
 
                 List<TaskBeen> filterTaskBeenList = filter(tempalltasks,newText);
                 alltasks.clear();
                 alltasks.addAll(filterTaskBeenList);
-                Log.d("search", "tempalltask.size "+tempalltasks.size());
-                Log.d("search", "alltask.size: "+alltasks.size());
                 taskAdapter.notifyDataSetChanged();
                 recyclerView.scrollToPosition(0);
                 return true;
@@ -93,7 +88,6 @@ public class TaskSearchActivity extends AppCompatActivity {
             public void onSearchViewShown() {
                 //Do some magic
             }
-
             @Override
             public void onSearchViewClosed() {
                 alltasks.clear();

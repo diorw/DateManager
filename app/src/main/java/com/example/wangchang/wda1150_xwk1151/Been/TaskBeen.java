@@ -25,7 +25,6 @@ public class TaskBeen {
     //提醒时间
     private String RemindTime;
     //任务标题
-
     @NotNull
     private String title;
 
