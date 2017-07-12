@@ -14,12 +14,13 @@
             android:layout_height="wrap_content"
             android:text="选择月份"
             android:textSize="50px"/>
+
         <ImageView
             android:id="@+id/addbtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-           android:layout_marginLeft="200dp"
-            android:src="@drawable/add_black"/>
+            android:layout_marginLeft="200dp"
+            android:src="@drawable/add_black" />
     </LinearLayout>
     <GridView
         android:layout_below="@+id/title_select_month"
@@ -54,6 +55,7 @@
             fab:fab_colorNormal="@color/white"
             fab:fab_title="添加账单"
             fab:fab_colorPressed="@color/white_pressed"/>
+
 
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
