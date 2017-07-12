@@ -53,7 +53,7 @@ public class GameFragment extends Fragment{
 
     private FloatingActionsMenu menuMultipleActions;
     private FloatingActionButton actionA;
-    private FloatingActionButton actionC;
+
 
 
     @Nullable
@@ -155,7 +155,6 @@ public class GameFragment extends Fragment{
 
 
 
-
         return view;
 
 
@@ -187,7 +186,7 @@ public class GameFragment extends Fragment{
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("add");
+
             }
         });
 
@@ -201,6 +200,7 @@ public class GameFragment extends Fragment{
 
             }
         });
+
 
 
 

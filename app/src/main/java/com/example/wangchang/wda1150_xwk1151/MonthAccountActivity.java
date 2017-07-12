@@ -2,13 +2,20 @@ package com.example.wangchang.wda1150_xwk1151;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.menu.ActionMenuItemView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.wangchang.wda1150_xwk1151.Been.AccountBeen;
 
 import java.util.List;
@@ -35,12 +42,20 @@ public class MonthAccountActivity extends AppCompatActivity {
     private List<AccountBeen> accountBeens_in;
 
     private List<AccountBeen> accountBeens_out;
+    private List<AccountBeen> accountBeens;
 
     private double insum = 0.00;
 
     private double outsum = 0.00;
 
     private double allsum = 0.00;
+
+    private ImageView in_btn;
+    private ImageView out_btn;
+
+    private RecyclerView mRecyclerView;
+    LinearLayoutManager mLayoutManager;
+    private AccountAdapter accountAdapter;
 
 
 
@@ -71,7 +86,7 @@ public class MonthAccountActivity extends AppCompatActivity {
         DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(MonthAccountActivity.this,"account-db",null);
         DaoMaster daoMaster = new DaoMaster(devOpenHelper.getWritableDatabase());
         DaoSession daoSession = daoMaster.newSession();
-        AccountBeenDao accountBeenDao = daoSession.getAccountBeenDao();
+        final AccountBeenDao accountBeenDao = daoSession.getAccountBeenDao();
 
         //查询
         accountBeens_in = accountBeenDao.queryBuilder().where(AccountBeenDao.Properties.Type.eq("收入"),AccountBeenDao.Properties.Month.eq(month))
@@ -108,11 +123,89 @@ public class MonthAccountActivity extends AppCompatActivity {
         tv_month_all = (TextView) findViewById(R.id.month_all);
         tv_month_all.setText(month_all);
 
+        in_btn = (ImageView) findViewById(R.id.in_btn);
+        out_btn = (ImageView) findViewById(R.id.out_btn);
+
+
+        mRecyclerView  = (RecyclerView) findViewById(R.id.accountrecyclerview);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setHasFixedSize(true);
+        accountBeens =accountBeens_in;
+        accountAdapter = new AccountAdapter(accountBeens);
+        mRecyclerView.setAdapter(accountAdapter);
+
+        accountAdapter.setonItemClickListener(new AccountAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, final int position) {
+                final MaterialDialog dialog = new MaterialDialog.Builder(MonthAccountActivity.this)
+                        .customView(R.layout.showaccount, false)
+                        .positiveText("修改")
+                        .negativeText("取消")
+                        .neutralText("删除")
+                        .onAny(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                if (which == DialogAction.NEGATIVE){
+                                    dialog.dismiss();
+                                }
+                                else if (which == DialogAction.POSITIVE){
+                                    Intent intent = new Intent(MonthAccountActivity.this,ChangedAccountActivity.class);
+
+                                    intent.putExtra("month",month);
+                                    intent.putExtra("accountId",accountBeens.get(position).getId());
+
+                                    startActivity(intent);
+                                }
+                                else if (which == DialogAction.NEUTRAL) {
+                                    accountBeenDao.deleteByKey(accountBeens.get(position).getId());
+                                    dialog.dismiss();
+                                }
+                            }
+                        })
+                        .show();
+                View customeView = dialog.getCustomView();
+
+
+                TextView name = (TextView) customeView.findViewById(R.id.accountname);
+                TextView money = (TextView) customeView.findViewById(R.id.accountmoney);
+                TextView type = (TextView) customeView.findViewById(R.id.accounttype);
+                TextView time = (TextView) customeView.findViewById(R.id.accounttime);
+                TextView intro = (TextView) customeView.findViewById(R.id.accountintroduce);
+
+                name.setText(accountBeens.get(position).getName());
+                money.setText(String.valueOf(accountBeens.get(position).getMoney()));
+                type.setText(accountBeens.get(position).getType());
+                time.setText(accountBeens.get(position).getDate());
+                intro.setText(accountBeens.get(position).getIntroduce());
+
+
+
+            }
+        });
 
 
 
 
 
+        in_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                accountBeens.clear();
+                accountBeens.addAll(accountBeenDao.queryBuilder().where(AccountBeenDao.Properties.Type.eq("收入"),AccountBeenDao.Properties.Month.eq(month))
+                        .orderAsc(AccountBeenDao.Properties.Id)
+                        .build().list());
+                accountAdapter.notifyDataSetChanged();
+            }
+        });
+        out_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                accountBeens.clear();
+                accountBeens.addAll(accountBeens_out);
+                accountAdapter.notifyDataSetChanged();
+            }
+        });
 
 
 

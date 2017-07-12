@@ -23,6 +23,7 @@
         <activity android:name=".MonthAccountActivity"></activity>
         <activity android:name=".AddAccount_forFloatingActivity"></activity>
         <activity android:name=".AddAccount_forMonthActivity"></activity>
+        <activity android:name=".ChangedAccountActivity"></activity>
     </application>
 
 </manifest>

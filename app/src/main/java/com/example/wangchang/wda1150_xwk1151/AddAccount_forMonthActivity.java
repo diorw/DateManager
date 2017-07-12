@@ -77,10 +77,9 @@ public class AddAccount_forMonthActivity extends AppCompatActivity {
         final AccountBeenDao accountBeenDao = daoSession.getAccountBeenDao();
 
         setPricePoint(moneyedt);
-        if (moneyedt.getText() == null){
-            money = Float.parseFloat(moneyedt.getText().toString());
+        moneyedt.setText("0.00");
 
-        }
+
 
 
         final Calendar c = Calendar.getInstance();
@@ -161,7 +160,7 @@ public class AddAccount_forMonthActivity extends AppCompatActivity {
                     error = 0;
 
                 }
-                if ((moneyedt.getText() == null)&&(error==1)){
+                if ((moneyedt.getText().toString().equals(""))&&(error==1)){
                     Snackbar.make(v,"请填写金额",Snackbar.LENGTH_LONG).show();
                     error = 0;
 
@@ -172,7 +171,12 @@ public class AddAccount_forMonthActivity extends AppCompatActivity {
 
                 }
                 if (error == 1) {
-                    new_account = new AccountBeen(id, name, type, 123.00, month, timepicker.getText().toString(), introedt.getText().toString());
+
+
+                    money = Float.parseFloat(moneyedt.getText().toString());
+                    Snackbar.make(v,id+"",Snackbar.LENGTH_LONG).show();
+
+                    new_account = new AccountBeen(id, name, type, money, month, timepicker.getText().toString(), introedt.getText().toString());
                     accountBeenDao.insert(new_account);
 
                     Intent intent = new Intent(AddAccount_forMonthActivity.this,MonthAccountActivity.class);

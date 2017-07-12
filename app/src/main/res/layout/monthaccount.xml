@@ -48,6 +48,22 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/in_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/add_black"/>
+        <ImageView
+            android:id="@+id/out_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/add_black"/>
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_marginLeft="16dp"
@@ -56,7 +72,7 @@
         android:layout_marginBottom="8dp"
 
         android:layout_height="match_parent"
-        android:id="@+id/accountrecycleview">
+        android:id="@+id/accountrecyclerview">
 
     </android.support.v7.widget.RecyclerView>
 
