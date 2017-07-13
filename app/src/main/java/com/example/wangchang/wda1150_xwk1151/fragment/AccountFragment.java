@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 
 import android.widget.GridView;
@@ -40,7 +41,6 @@ public class AccountFragment extends Fragment{
 
     private GridView gridView;
 
-    private View add;
 
     private List<AccountBeen> accountBeens_in;
 
@@ -71,7 +71,8 @@ public class AccountFragment extends Fragment{
         mInList = new ArrayList<String>();
         mOutList = new ArrayList<String>();
         mAllList = new ArrayList<String>();
-        DecimalFormat df = new DecimalFormat("#.00");
+        DecimalFormat df = new DecimalFormat("#,##0.00");
+
 
 
         //初始化数据库
@@ -197,15 +198,6 @@ public class AccountFragment extends Fragment{
             }
         });
 
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), LoginActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
         actionA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -249,7 +241,7 @@ public class AccountFragment extends Fragment{
             {
                 month_every = (""+(i+1));
             }
-            DecimalFormat   fnum   =   new   DecimalFormat("##0.00");
+            DecimalFormat   fnum   =   new   DecimalFormat("#,##0.00");
             for (int j=0;j<accountBeens_in.size();j++){
                 if (accountBeens_in.get(j).getMonth().equals(month_every)) {
                     insum += accountBeens_in.get(j).getMoney();
@@ -287,12 +279,6 @@ public class AccountFragment extends Fragment{
 
 
         gridView.setAdapter(new MonthAdapter(getActivity(), mMonthList, mInList, mOutList, mAllList));
-
-
-
-        add = view.findViewById(R.id.addbtn);
-
-
 
         menuMultipleActions = (FloatingActionsMenu) view.findViewById(R.id.multiple_actions);
 

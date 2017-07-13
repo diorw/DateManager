@@ -107,7 +107,7 @@ public class ChangedAccountActivity extends AppCompatActivity {
                     }
                 },c.get(Calendar.YEAR),c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH));
                 dialog.show();
-                Snackbar.make(v,month+"月",Snackbar.LENGTH_LONG).show();
+
             }
         });
 
@@ -150,7 +150,7 @@ public class ChangedAccountActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 name = parent.getItemAtPosition(position).toString();
-                Snackbar.make(parent,name,Snackbar.LENGTH_LONG).show();
+
             }
 
             @Override

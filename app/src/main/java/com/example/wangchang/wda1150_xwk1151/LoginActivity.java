@@ -3,6 +3,7 @@ package com.example.wangchang.wda1150_xwk1151;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -28,6 +29,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.example.wangchang.wda1150_xwk1151.Been.UserBeen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,26 +64,45 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private List<UserBeen> userBeenList;
+    private UserBeen this_user;
+    private UserBeenDao userBeenDao;
+    private int usercount;
+    private TextView register;
+    private List<String> username;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        username = new ArrayList<String>();
+
+        //初始化数据库
+        DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(getApplicationContext(),"user-db",null);
+        DaoMaster daoMaster = new DaoMaster(devOpenHelper.getWritableDatabase());
+        DaoSession daoSession = daoMaster.newSession();
+        userBeenDao = daoSession.getUserBeenDao();
+
+//        UserBeen user1 = new UserBeen(1L,"123@qq.com","123456");
+//        userBeenDao.insert(user1);
+
+        userBeenList = userBeenDao.loadAll();
+        usercount = userBeenList.size();
+
+
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        populateAutoComplete();
-
         mPasswordView = (EditText) findViewById(R.id.password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
-            }
-        });
+
+        for (int i=0 ;i<usercount;i++){
+            username.add(userBeenList.get(i).getEmail());
+        }
+        addEmailsToAutoComplete(username);
+
+
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
@@ -92,6 +114,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+        register = (TextView) findViewById(R.id.register_btn);
+        register.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+                startActivityForResult(intent,1);
+            }
+        });
     }
 
     private void populateAutoComplete() {
@@ -143,10 +173,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
+    //登录判断过程
     private void attemptLogin() {
-        if (mAuthTask != null) {
-            return;
-        }
 
         // Reset errors.
         mEmailView.setError(null);
@@ -159,12 +187,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         boolean cancel = false;
         View focusView = null;
 
-        // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
-            cancel = true;
-        }
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
@@ -175,30 +197,62 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
             cancel = true;
+        }else if (!isEmailinDb(email)){
+            mEmailView.setError(getString(R.string.error_notindb_email));
+            focusView = mEmailView;
+            cancel = true;
+        }
+        else if (TextUtils.isEmpty(password)){
+            mPasswordView.setError(getString(R.string.error_empty_passowrd));
+            focusView = mPasswordView;
+            cancel = true;
+        }else if (!isPasswordValid(password)){
+            mPasswordView.setError(getString(R.string.error_invalid_password));
+            focusView = mPasswordView;
+            cancel = true;
+        }else if (!isPasswordMatch(email,password)){
+            mPasswordView.setError(getString(R.string.error_notmach_password));
+            focusView = mPasswordView;
+            cancel = true;
         }
 
         if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
             focusView.requestFocus();
         } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
         }
     }
 
+    //设置判定条件
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
         return email.contains("@");
     }
-
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return password.length() >= 6;
     }
+    private boolean isEmailinDb(String email){
+        for (int i=0;i<usercount;i++){
+            if (userBeenList.get(i).getEmail().equals(email)){
+                return true;
+            }
+        }
+        return false;
+    }
+    private boolean isPasswordMatch(String email,String password){
+        for (int i=0 ;i<usercount;i++){
+            if (userBeenList.get(i).getEmail().equals(email)){
+                if (userBeenList.get(i).getPassword().equals(password)){
+                    return true;
+                }
+            }
+
+        }
+        return false;
+
+    }
+
 
     /**
      * Shows the progress UI and hides the login form.
@@ -228,11 +282,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
                 }
             });
+
+            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(intent);
+
         } else {
             // The ViewPropertyAnimator APIs are not available, so simply show
             // and hide the relevant UI components.
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -269,7 +329,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
 
     }
-
+    //设置显示登录过的账号
     private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
         //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
         ArrayAdapter<String> adapter =
@@ -344,6 +404,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected void onCancelled() {
             mAuthTask = null;
             showProgress(false);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if ((requestCode == 1) &&(resultCode == 1)){
+
+            this_user = userBeenDao.queryBuilder().orderDesc(UserBeenDao.Properties.Id).limit(1).build().unique();
+            userBeenList = userBeenDao.loadAll();
+            usercount = userBeenList.size();
+
+
+
+            mEmailView.setText(this_user.getEmail());
+            mPasswordView.setText(this_user.getPassword());
+
         }
     }
 }

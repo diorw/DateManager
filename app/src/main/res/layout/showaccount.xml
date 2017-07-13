@@ -10,7 +10,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingTop="20dp">
         <net.steamcrafted.materialiconlib.MaterialIconView
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_marginLeft="12dp"
@@ -18,7 +19,7 @@
             android:layout_marginTop="24dp"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            app:materialIcon="coin"
+            app:materialIcon="format_title"
             app:materialIconColor="#ADADAD"
             app:materialIconSize="24dp"
             android:scaleType="center"
@@ -26,7 +27,7 @@
             />
 
         <com.wrapp.floatlabelededittext.FloatLabeledEditText
-            android:layout_width="300dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             >
             <EditText
@@ -59,7 +60,7 @@
             android:id="@+id/moneyicon"
             />
         <com.wrapp.floatlabelededittext.FloatLabeledEditText
-            android:layout_width="300dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             >
             <EditText
@@ -94,7 +95,7 @@
             android:id="@+id/typeicon"
             />
         <com.wrapp.floatlabelededittext.FloatLabeledEditText
-            android:layout_width="300dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             >
             <EditText
@@ -128,7 +129,7 @@
             android:id="@+id/timeicon"
             />
         <com.wrapp.floatlabelededittext.FloatLabeledEditText
-            android:layout_width="300dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             >
 
@@ -148,7 +149,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingBottom="30dp">
         <net.steamcrafted.materialiconlib.MaterialIconView
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_marginLeft="12dp"
@@ -164,7 +166,7 @@
             android:id="@+id/introduceicon"
             />
         <com.wrapp.floatlabelededittext.FloatLabeledEditText
-            android:layout_width="300dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             >
 

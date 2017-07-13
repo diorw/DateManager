@@ -47,6 +47,8 @@ dependencies {
     compile 'com.miguelcatalan:materialsearchview:1.4.0'
     compile 'com.github.shem8:material-login:2.1.1'
 
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
+
 
 }
 repositories {

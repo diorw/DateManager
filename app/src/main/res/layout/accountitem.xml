@@ -3,14 +3,15 @@
 
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:layout_width="325dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <com.example.wangchang.wda1150_xwk1151.fragment.CardFrameLayout
         style="@style/Card"
         android:id="@+id/accountitem"
-        android:layout_width="wrap_content"
+        android:layout_width="325dp"
         android:layout_height="wrap_content"
         android:padding="10dp"
+        android:background="#f8fbf8"
         >
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -21,7 +22,9 @@
                 android:id="@+id/accountname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="name"/>
+                android:text="name"
+                android:textSize="20dp"
+                android:textColor="#2b2b2b"/>
             <TextView
                 android:layout_below="@+id/accounttime"
                 android:id="@+id/accountintroduce"
@@ -30,7 +33,9 @@
                 android:singleLine="true"
                 android:maxEms="8"
                 android:ellipsize="end"
-                android:text="你猜我猜你猜我猜不猜"/>
+                android:text="你猜我猜你猜我猜不猜"
+                android:textSize="12dp"
+                android:textColor="#949495"/>
 
             <TextView
                 android:layout_alignParentRight="true"
@@ -39,13 +44,16 @@
                 android:layout_height="wrap_content"
                 android:text="money"
                 android:textSize="40dp"
-                android:padding="5dp"/>
+                android:padding="5dp"
+                android:textColor="#474a4d"/>
             <TextView
                 android:layout_below="@+id/accountname"
                 android:id="@+id/accounttime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2017-7-9"/>
+                android:textSize="15dp"
+                android:text="2017-7-9"
+                android:textColor="#727171"/>
         </RelativeLayout>
 
 

@@ -8,6 +8,7 @@
 
 
     <LinearLayout
+        android:paddingTop="100dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -18,7 +19,7 @@
             android:layout_marginTop="24dp"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            app:materialIcon="coin"
+            app:materialIcon="format_title"
             app:materialIconColor="#ADADAD"
             app:materialIconSize="24dp"
             android:scaleType="center"
@@ -26,7 +27,7 @@
             />
         <fr.ganfra.materialspinner.MaterialSpinner
             android:id="@+id/name_spinner"
-            android:layout_width="fill_parent"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
 
             app:ms_arrowColor="#0000FF"

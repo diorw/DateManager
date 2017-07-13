@@ -42,7 +42,7 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.accountV
     public void onBindViewHolder(accountView holder, int position) {
         holder.accountname.setText(accounts.get(position).getName());
         holder.accountintro.setText(accounts.get(position).getIntroduce());
-        DecimalFormat decimalFormat=new DecimalFormat("##0.00");
+        DecimalFormat decimalFormat=new DecimalFormat("#,##0.00");
         if (accounts.get(position).getType().equals("收入")){
 
             holder.accountmoney.setText("+"+decimalFormat.format(accounts.get(position).getMoney()));
