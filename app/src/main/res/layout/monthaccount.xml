@@ -8,68 +8,139 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </android.support.v7.widget.Toolbar>
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:shrinkColumns="1"
+        android:stretchColumns="2"
+        android:background="#5654a2"
+        android:padding="10dp">
+
+        <TableRow>
+            <TextView android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:text="收入"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:textColor="#ffffff"/>
+            <TextView android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="支出"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:textColor="#ffffff"/>
+            <TextView android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:text="合计"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:textColor="#ffffff"/>
+
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:paddingTop="10dp"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:id="@+id/month_in"
+                android:text="+3200.00"
+                android:textSize="20dp"
+                android:textColor="#ffffff"
+                />
+            <TextView
+                android:paddingTop="10dp"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/month_out"
+                android:gravity="center"
+                android:text="-3200.00"
+                android:textSize="20dp"
+                android:textColor="#ffffff"
+                />
+
+            <TextView
+                android:paddingTop="10dp"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/month_all"
+                android:gravity="center"
+                android:text="0.00"
+                android:textSize="20dp"
+                android:textColor="#ffffff"
+                />
+
+        </TableRow>
+
+    </TableLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="right"
-        android:padding="9dp"
-        android:background="@color/blue"
-        >
-
-        <TextView
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:id="@+id/month_in"
-            android:text="+3200.00"
-            />
-        <TextView
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/month_out"
-            android:text="-3200.00"
-            />
+        android:gravity="center"
+        android:background="#5654a2">
         <View
-            android:layout_height="3px"
-            android:layout_width="70dp"
-            android:background="#66CCFF"
-            />
+            android:layout_height="4px"
+            android:layout_width="350dp"
+            android:background="#ffffff"
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/month_all"
-            android:text="0.00"
             />
-
     </LinearLayout>
 
+
+
     <LinearLayout
+        android:padding="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <ImageView
+        android:layout_height="86dp"
+        android:orientation="horizontal"
+        android:background="#5654a2"
+        android:gravity=""
+        android:weightSum="1">
+        <LinearLayout
+            android:layout_marginRight="20dp"
             android:id="@+id/in_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/add_black"/>
-        <ImageView
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="@drawable/tittle_backgroud2">
+            <ImageView
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:src="@drawable/in"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="收入"
+                android:textSize="38dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="20dp"
             android:id="@+id/out_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/add_black"/>
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="@drawable/select_tittle_backgroud"
+            >
+            <ImageView
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:src="@drawable/out"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="支出"
+                android:textSize="38dp"/>
+
+        </LinearLayout>
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
+        android:background="@drawable/page_backgroud"
 
         android:layout_height="match_parent"
         android:id="@+id/accountrecyclerview">

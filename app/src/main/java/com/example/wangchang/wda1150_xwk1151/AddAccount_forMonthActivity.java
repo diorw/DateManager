@@ -104,7 +104,7 @@ public class AddAccount_forMonthActivity extends AppCompatActivity {
                     }
                 },c.get(Calendar.YEAR),c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH));
                 dialog.show();
-                Snackbar.make(v,month+"月",Snackbar.LENGTH_LONG).show();
+
             }
         });
 
@@ -133,7 +133,7 @@ public class AddAccount_forMonthActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 name = parent.getItemAtPosition(position).toString();
-                Snackbar.make(parent,name,Snackbar.LENGTH_LONG).show();
+
             }
 
             @Override
@@ -178,10 +178,11 @@ public class AddAccount_forMonthActivity extends AppCompatActivity {
 
                     new_account = new AccountBeen(id, name, type, money, month, timepicker.getText().toString(), introedt.getText().toString());
                     accountBeenDao.insert(new_account);
-
+                    setResult(2);
+                    finish();
                     Intent intent = new Intent(AddAccount_forMonthActivity.this,MonthAccountActivity.class);
-                    intent.putExtra("month",enter_month);
-                    startActivity(intent);
+//                    intent.putExtra("month",enter_month);
+//                    startActivity(intent);
                 }
 
             }
