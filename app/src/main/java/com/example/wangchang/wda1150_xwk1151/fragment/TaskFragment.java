@@ -101,6 +101,7 @@ public class TaskFragment extends Fragment {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
                 sdate = new java.sql.Date(date.getDate().getTime());
+                Log.d("date", "onDateSelected: "+sdate);
                 tasks.clear();
                 tasks.addAll(taskBeenDao.queryBuilder().where(TaskBeenDao.Properties.Date.eq(sdate.toString())).build().list());
                 taskAdapter.notifyDataSetChanged();

@@ -60,6 +60,11 @@ public class TaskSettingactivity extends AppCompatActivity {
     private CheckBox checkbox;
     private int mhour;
     private int mminute;
+    private int day;
+    private int month;
+    private int year;
+    private int frequency = 0;
+    private  String date;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,17 +89,28 @@ public class TaskSettingactivity extends AppCompatActivity {
         remind_time = (EditText)findViewById(R.id.remind_time);
         titleView = (EditText)findViewById(R.id.tasktitle_set);
         materialSpinner = (MaterialSpinner)findViewById(R.id.spinner);
-        materialSpinner.setItems("每天","每周");
+        materialSpinner.setItems("一次性","每天","每周");
         materialSpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
-
+                    if(item.toString().equals("一次性")){
+                        frequency = 0;
+                    }else if(item.toString().equals("每天")){
+                        frequency = 1;
+                    }else {
+                        frequency = 2;
+                    }
             }
         });
         endTxtview = (EditText)findViewById(R.id.endtime);
         taskid = getIntent().getLongExtra("taskId",-1);
         if(taskid!=-1) {
             tasknow = taskBeenDao.queryBuilder().where(TaskBeenDao.Properties.Id.eq(taskid)).build().unique();
+            date = tasknow.getDate();
+            Log.d("date", "onClick: "+date);
+            year = Integer.valueOf(date.split("-")[0]);
+            month = Integer.valueOf(date.split("-")[1]);
+            day = Integer.valueOf(date.split("-")[2]);
             startTxtview.setText(tasknow.getStartTime());
             endTxtview.setText(tasknow.getEndTime());
             titleView.setText(tasknow.getTitle());
@@ -144,6 +160,8 @@ public class TaskSettingactivity extends AppCompatActivity {
                         tasknow.setStartTime(startTxtview.getText().toString());
                         tasknow.setDescription(description.getText().toString());
                         tasknow.setIsCompleted(checkbox.isCheck());
+                        tasknow.setDate(date);
+
                         if (checkbox.isCheck()) {
                             tasknow.setIsCompleted(true);
                         }
@@ -155,7 +173,11 @@ public class TaskSettingactivity extends AppCompatActivity {
                         } else {
                             id = temp.getId() + 1;
                         }
-                        String date = getIntent().getStringExtra("date");
+                        date = getIntent().getStringExtra("date");
+                        year = Integer.valueOf(date.split("-")[0]);
+                        month = Integer.valueOf(date.split("-")[1]);
+                        day = Integer.valueOf(date.split("-")[2]);
+
                         tasknow = new TaskBeen(id, date, startTxtview.getText().toString(), endTxtview.getText().toString(), description.getText().toString(), checkbox.isCheck(), remind_time.getText().toString(), titleView.getText().toString());
                         taskBeenDao.insert(tasknow);
                     }
@@ -165,22 +187,40 @@ public class TaskSettingactivity extends AppCompatActivity {
                         Intent intentemp = new Intent(TaskSettingactivity.this, AlarmReceiver.class);
 
                         PendingIntent sender = PendingIntent.getBroadcast(TaskSettingactivity.this, 0, intentemp, 0);
-
                         Calendar calendar = Calendar.getInstance();
-
-
-                        calendar.setTimeInMillis(System.currentTimeMillis());
-                        Log.d("年", "onClick: "+calendar.get(Calendar.YEAR));
-                        Log.d("月","onClick: "+calendar.get(Calendar.MONTH));
+                        calendar.set(Calendar.YEAR,year);
+                        calendar.set(Calendar.MONTH,month-1);
+                        calendar.set(Calendar.DAY_OF_MONTH,day);
                         calendar.set(Calendar.MINUTE, mminute);
                         calendar.set(Calendar.HOUR_OF_DAY, mhour);
+                        Log.d("年", "onClick: "+calendar.get(Calendar.YEAR));
+                        Log.d("月","onClick: "+calendar.get(Calendar.MONTH));
+                        Log.d("日","onClick: "+calendar.get(Calendar.DAY_OF_MONTH));
                         Log.d("小时", "onClick: "+calendar.get(Calendar.HOUR_OF_DAY));
                         Log.d("分钟", "onClick: "+calendar.get(Calendar.MINUTE));
                         calendar.set(Calendar.SECOND, 0);
                         calendar.set(Calendar.MILLISECOND, 0);
-                        Log.d("分钟", "onClick: "+calendar.getTimeInMillis());
+
                         AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
-                        manager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),sender);
+                        //防止用户提醒时间小于当前时间闹钟马上触发，根据频率推迟一天或一周
+                        if(calendar.getTimeInMillis()<System.currentTimeMillis()){
+                            if(frequency==1){
+                                calendar.set(Calendar.DAY_OF_MONTH,calendar.DAY_OF_MONTH+1);
+                                manager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),sender);
+                            }else if(frequency==2){
+                                calendar.set(Calendar.DAY_OF_MONTH,calendar.DAY_OF_MONTH+7);
+                                manager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),sender);
+                            }else if(frequency==0){
+                                Toast.makeText(getApplicationContext(),"该时间已过，请重新设置提醒时间",Toast.LENGTH_LONG).show();
+                            }
+
+                        }
+
+                        if(frequency ==1){
+                            manager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),1000*60*60*24,sender);
+                        }else if(frequency==2){
+                            manager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),1000*60*60*24*7,sender);
+                        }
                         Toast.makeText(getApplicationContext(),"设置闹钟时间为"+mhour+":"+mminute,Toast.LENGTH_LONG).show();
                     }
                     setResult(3);
