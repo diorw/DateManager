@@ -48,6 +48,7 @@ public class TaskSettingactivity extends AppCompatActivity {
     private EditText endTxtview;
     private ListPopupWindow mListPop;
     private EditText fre;
+    private CheckBox isalarm;
     private EditText description;
     private EditText remind_time;
     private MaterialSpinner materialSpinner;
@@ -78,7 +79,7 @@ public class TaskSettingactivity extends AppCompatActivity {
         toolbar.setTitle("任务详细设置");
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         toolbar.inflateMenu(R.menu.task_toolbar_menu);
-
+        frequency=0;
         taskid = getIntent().getExtras().getLong("taskId");
         DaoMaster.DevOpenHelper devopenhelper = new DaoMaster.DevOpenHelper(getApplicationContext(),"task-db",null);
         DaoMaster daomaster = new DaoMaster(devopenhelper.getWritableDatabase());
@@ -88,6 +89,7 @@ public class TaskSettingactivity extends AppCompatActivity {
         startTxtview = (EditText)findViewById(R.id.starttime);
         remind_time = (EditText)findViewById(R.id.remind_time);
         titleView = (EditText)findViewById(R.id.tasktitle_set);
+        isalarm = (CheckBox)findViewById(R.id.isAlarm);
         materialSpinner = (MaterialSpinner)findViewById(R.id.spinner);
         materialSpinner.setItems("一次性","每天","每周");
         materialSpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
@@ -106,11 +108,15 @@ public class TaskSettingactivity extends AppCompatActivity {
         taskid = getIntent().getLongExtra("taskId",-1);
         if(taskid!=-1) {
             tasknow = taskBeenDao.queryBuilder().where(TaskBeenDao.Properties.Id.eq(taskid)).build().unique();
+
             date = tasknow.getDate();
             Log.d("date", "onClick: "+date);
             year = Integer.valueOf(date.split("-")[0]);
             month = Integer.valueOf(date.split("-")[1]);
             day = Integer.valueOf(date.split("-")[2]);
+            mhour = Integer.valueOf(tasknow.getRemindTime().split(":")[0]);
+            mminute = Integer.valueOf(tasknow.getRemindTime().split(":")[1]);
+
             startTxtview.setText(tasknow.getStartTime());
             endTxtview.setText(tasknow.getEndTime());
             titleView.setText(tasknow.getTitle());
@@ -183,7 +189,7 @@ public class TaskSettingactivity extends AppCompatActivity {
                     }
 
 
-                    if (tasknow.getRemindTime() != null) {
+                    if (tasknow.getRemindTime() != null&&isalarm.isCheck()) {
                         Intent intentemp = new Intent(TaskSettingactivity.this, AlarmReceiver.class);
 
                         PendingIntent sender = PendingIntent.getBroadcast(TaskSettingactivity.this, 0, intentemp, 0);
@@ -200,16 +206,18 @@ public class TaskSettingactivity extends AppCompatActivity {
                         Log.d("分钟", "onClick: "+calendar.get(Calendar.MINUTE));
                         calendar.set(Calendar.SECOND, 0);
                         calendar.set(Calendar.MILLISECOND, 0);
-
+                        Log.d("frequency", "onClick: "+frequency);
                         AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
                         //防止用户提醒时间小于当前时间闹钟马上触发，根据频率推迟一天或一周
                         if(calendar.getTimeInMillis()<System.currentTimeMillis()){
                             if(frequency==1){
                                 calendar.set(Calendar.DAY_OF_MONTH,calendar.DAY_OF_MONTH+1);
                                 manager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),sender);
+                                Toast.makeText(getApplicationContext(),"设置闹钟时间为"+mhour+":"+mminute,Toast.LENGTH_LONG).show();
                             }else if(frequency==2){
                                 calendar.set(Calendar.DAY_OF_MONTH,calendar.DAY_OF_MONTH+7);
                                 manager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),sender);
+                                Toast.makeText(getApplicationContext(),"设置闹钟时间为"+mhour+":"+mminute,Toast.LENGTH_LONG).show();
                             }else if(frequency==0){
                                 Toast.makeText(getApplicationContext(),"该时间已过，请重新设置提醒时间",Toast.LENGTH_LONG).show();
                             }
@@ -221,7 +229,15 @@ public class TaskSettingactivity extends AppCompatActivity {
                         }else if(frequency==2){
                             manager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),1000*60*60*24*7,sender);
                         }
-                        Toast.makeText(getApplicationContext(),"设置闹钟时间为"+mhour+":"+mminute,Toast.LENGTH_LONG).show();
+
+
+                    }else if(isalarm.isCheck()==false){
+                        Intent intentemp = new Intent(TaskSettingactivity.this, AlarmReceiver.class);
+
+                        PendingIntent sender = PendingIntent.getBroadcast(TaskSettingactivity.this, 0, intentemp, 0);
+                        AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                        manager.cancel(sender);
+                        Toast.makeText(getApplicationContext(),"闹钟已取消//未设置闹钟",Toast.LENGTH_LONG).show();
                     }
                     setResult(3);
                     finish();
