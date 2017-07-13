@@ -7,12 +7,12 @@
         android:title="添加"
         app:showAsAction="ifRoom"
         />
-    <item
-        android:id="@+id/pie"
-        android:icon="@drawable/ic_insert_chart_white_48dp"
-        android:title="统计图表"
-        app:showAsAction="ifRoom"
-        />
+    <!--<item-->
+        <!--android:id="@+id/pie"-->
+        <!--android:icon="@drawable/ic_insert_chart_white_48dp"-->
+        <!--android:title="统计图表"-->
+        <!--app:showAsAction="ifRoom"-->
+        <!--/>-->
 
 
 

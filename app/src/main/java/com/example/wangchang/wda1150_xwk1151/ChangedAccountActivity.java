@@ -191,6 +191,7 @@ public class ChangedAccountActivity extends AppCompatActivity {
 
                     accountBeenDao.update(updateData);
 
+
                     Intent intent = new Intent(ChangedAccountActivity.this,MonthAccountActivity.class);
                     intent.putExtra("month",enter_month);
                     startActivity(intent);

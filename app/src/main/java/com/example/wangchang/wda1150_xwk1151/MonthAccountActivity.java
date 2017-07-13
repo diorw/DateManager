@@ -90,7 +90,7 @@ public class MonthAccountActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_48dp);
 
         add = (ActionMenuItemView) findViewById(R.id.add_account);
-        pie = (ActionMenuItemView) findViewById(R.id.pie);
+
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -267,13 +267,7 @@ public class MonthAccountActivity extends AppCompatActivity {
                 startActivityForResult(intent,1);
             }
         });
-        pie.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MonthAccountActivity.this,PieChartActivity.class);
-                startActivity(intent);
-            }
-        });
+
 
     }
     public void initDataAfterDelete(){
@@ -329,6 +323,9 @@ public class MonthAccountActivity extends AppCompatActivity {
             accountBeens.addAll(accountBeenDao.queryBuilder().where(AccountBeenDao.Properties.Type.eq("收入"),AccountBeenDao.Properties.Month.eq(month))
                     .orderDesc(AccountBeenDao.Properties.Date)
                     .build().list());
+            accountBeens_out= accountBeenDao.queryBuilder().where(AccountBeenDao.Properties.Type.eq("支出"),AccountBeenDao.Properties.Month.eq(month))
+                    .orderDesc(AccountBeenDao.Properties.Date)
+                    .build().list();
             accountAdapter.notifyDataSetChanged();
         }
     }
