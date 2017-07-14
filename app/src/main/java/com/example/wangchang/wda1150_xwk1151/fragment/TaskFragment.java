@@ -115,6 +115,8 @@ public class TaskFragment extends Fragment {
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(getContext(), TaskSettingactivity.class);
                 intent.putExtra("taskId",tasks.get(position).getId());
+                intent.putExtra("iscomplete",tasks.get(position).getIsCompleted());
+                intent.putExtra("isalarm",tasks.get(position).getRemindTime()!=null);
                 startActivityForResult(intent,1);
             }
         });

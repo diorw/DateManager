@@ -86,6 +86,7 @@ public class TaskSettingactivity extends AppCompatActivity {
         DaoSession daosession = daomaster.newSession();
         final TaskBeenDao taskBeenDao = daosession.getTaskBeenDao();
         description = (EditText)findViewById(R.id.task_description);
+
         startTxtview = (EditText)findViewById(R.id.starttime);
         remind_time = (EditText)findViewById(R.id.remind_time);
         titleView = (EditText)findViewById(R.id.tasktitle_set);
@@ -104,8 +105,10 @@ public class TaskSettingactivity extends AppCompatActivity {
                     }
             }
         });
+        checkbox = (CheckBox)findViewById(R.id.checkboxAlarm);
         endTxtview = (EditText)findViewById(R.id.endtime);
         taskid = getIntent().getLongExtra("taskId",-1);
+
         if(taskid!=-1) {
             tasknow = taskBeenDao.queryBuilder().where(TaskBeenDao.Properties.Id.eq(taskid)).build().unique();
 
@@ -114,13 +117,22 @@ public class TaskSettingactivity extends AppCompatActivity {
             year = Integer.valueOf(date.split("-")[0]);
             month = Integer.valueOf(date.split("-")[1]);
             day = Integer.valueOf(date.split("-")[2]);
-            mhour = Integer.valueOf(tasknow.getRemindTime().split(":")[0]);
-            mminute = Integer.valueOf(tasknow.getRemindTime().split(":")[1]);
+
+            if(tasknow.getRemindTime()!=null) {
+                mhour = Integer.valueOf(tasknow.getRemindTime().split(":")[0]);
+                mminute = Integer.valueOf(tasknow.getRemindTime().split(":")[1]);
+            }
+
 
             startTxtview.setText(tasknow.getStartTime());
             endTxtview.setText(tasknow.getEndTime());
             titleView.setText(tasknow.getTitle());
             description.setText(tasknow.getDescription());
+            if(tasknow.getRemindTime()!=null){
+                isalarm.setChecked(true);
+            }else{
+                isalarm.setChecked(false);
+            }
             remind_time.setText(tasknow.getRemindTime());
         }
 
@@ -152,7 +164,7 @@ public class TaskSettingactivity extends AppCompatActivity {
 
 
         save = (ActionMenuItemView)findViewById(R.id.ok);
-        checkbox = (CheckBox)findViewById(R.id.checkboxAlarm);
+
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -168,9 +180,6 @@ public class TaskSettingactivity extends AppCompatActivity {
                         tasknow.setIsCompleted(checkbox.isCheck());
                         tasknow.setDate(date);
 
-                        if (checkbox.isCheck()) {
-                            tasknow.setIsCompleted(true);
-                        }
                         taskBeenDao.update(tasknow);
                     } else {
                         TaskBeen temp = taskBeenDao.queryBuilder().orderDesc(TaskBeenDao.Properties.Id).limit(1).unique();
@@ -228,6 +237,9 @@ public class TaskSettingactivity extends AppCompatActivity {
                             manager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),1000*60*60*24,sender);
                         }else if(frequency==2){
                             manager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),1000*60*60*24*7,sender);
+                        }else{
+                            manager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),sender);
+                            Toast.makeText(getApplicationContext(),"设置闹钟时间为"+mhour+":"+mminute,Toast.LENGTH_LONG).show();
                         }
 
 
